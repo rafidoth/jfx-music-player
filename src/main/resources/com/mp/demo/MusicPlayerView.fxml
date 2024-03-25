@@ -30,9 +30,9 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="72.0" layoutY="27.0" onAction="#playAudio" text=" ">
+            <JFXButton fx:id="play_pause_button" alignment="CENTER" contentDisplay="CENTER" layoutX="72.0" layoutY="27.0" onAction="#playAudio" text=" ">
                <graphic>
-                  <ImageView fitHeight="59.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="play_pause_imageView" fitHeight="59.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/play.png" />
                      </image>
@@ -73,5 +73,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXSlider>
+      <ImageView fx:id="imageView1" fitHeight="150.0" fitWidth="200.0" layoutX="171.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>

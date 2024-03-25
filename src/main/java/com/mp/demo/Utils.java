@@ -3,7 +3,7 @@ package com.mp.demo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javafx.scene.image.Image;
 import java.io.IOException;
 
 public class Utils {
@@ -17,5 +17,13 @@ public class Utils {
         stage.setScene(scene);
         System.out.println("ok");
         return  stage;
+    }
+
+    public static Image getIcon(String iconName){
+        String path = App.class.getResource("icons/"+iconName).toString();
+//        System.out.println(path);
+        Image img = new Image(path);
+//        System.out.println(img.getUrl());
+        return img;
     }
 }

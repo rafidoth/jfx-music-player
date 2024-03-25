@@ -1,7 +1,9 @@
 package com.mp.demo.Controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.mp.demo.Model.MusicPlayer;
+import com.mp.demo.Utils;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +25,7 @@ public class MusicPlayerController implements Initializable {
     private JFXSlider playbackSlider;
     @FXML
     private ImageView play_pause_imageView;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         MusicPlayer.currentPosistionProperty().addListener(((observableValue, number, t1) -> {
@@ -40,10 +43,9 @@ public class MusicPlayerController implements Initializable {
         playbackSlider.setMax(MusicPlayer.getAudioLength());
         playbackSlider.setValue(0);
         playbackSlider.setMin(0);
-//        play_pause_imageView.setImage(new Image(new FileInputStream("")));
+        play_pause_imageView.setImage(Utils.getIcon("pause.png"));
         MusicPlayer.play();
     }
-
 
     public void pauseAudio(){
         MusicPlayer.pause();

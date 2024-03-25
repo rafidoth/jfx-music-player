@@ -1,0 +1,7 @@
+.jfx-slider{
+    -jfx-default-thumb: #4C92E7;
+}
+.jfx-slider > .thumb{
+    -fx-background-color : #4C92E7;
+}
+

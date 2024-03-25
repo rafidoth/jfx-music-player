@@ -25,7 +25,7 @@ public class MusicPlayerController implements Initializable {
     private JFXSlider playbackSlider;
     @FXML
     private ImageView play_pause_imageView;
-
+    private boolean isPaused = true;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         MusicPlayer.currentPosistionProperty().addListener(((observableValue, number, t1) -> {
@@ -39,13 +39,21 @@ public class MusicPlayerController implements Initializable {
     }
 
     public void playAudio() throws FileNotFoundException {
-        System.out.println(MusicPlayer.getAudioLength());
-        playbackSlider.setMax(MusicPlayer.getAudioLength());
-        playbackSlider.setValue(0);
-        playbackSlider.setMin(0);
-        play_pause_imageView.setImage(Utils.getIcon("pause.png"));
-        MusicPlayer.play();
+        if(isPaused){
+            isPaused = false;
+            System.out.println(MusicPlayer.getAudioLength());
+            playbackSlider.setMax(MusicPlayer.getAudioLength());
+            playbackSlider.setValue(0);
+            playbackSlider.setMin(0);
+            play_pause_imageView.setImage(Utils.getIcon("pause.png"));
+            MusicPlayer.play();
+        }else {
+            isPaused = true;
+            play_pause_imageView.setImage(Utils.getIcon("play.png"));
+            pauseAudio();
+        }
     }
+
 
     public void pauseAudio(){
         MusicPlayer.pause();

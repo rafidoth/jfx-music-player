@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.mp.demo.Model.MusicPlayer;
 import com.mp.demo.Utils;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,36 +21,50 @@ import java.util.ResourceBundle;
 
 public class MusicPlayerController implements Initializable {
     @FXML
-    private Label currentTimeStampLabel;
-    @FXML
     private JFXSlider playbackSlider;
     @FXML
     private ImageView play_pause_imageView;
     private boolean isPaused = true;
+    private SimpleBooleanProperty isPause = new SimpleBooleanProperty(true);
+    @FXML
+    private Label timestamp;
+    @FXML
+    private Label titleLabel;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        playbackSlider.setValue(0.0);
         MusicPlayer.currentPosistionProperty().addListener(((observableValue, number, t1) -> {
-            currentTimeStampLabel.setText(t1.toString());
+            int hour = t1.intValue() /3600;
+            int minute = (t1.intValue()%3600)/60;
+            int second = t1.intValue() %60;
+            timestamp.setText(hour+":"+minute+":"+second);
             playbackSlider.setValue((double)t1);
+        }));
+
+        isPause.addListener(((observableValue, aBoolean, t1) -> {
+            if(t1)
+                play_pause_imageView.setImage(Utils.getIcon("play.png"));
+            else
+                play_pause_imageView.setImage(Utils.getIcon("pause.png"));
         }));
     }
 
-    public void setAudioFile(String path){
-        MusicPlayer.setMedia(path);
+    public void setAudioFile(String name){
+        MusicPlayer.setMedia(name);
     }
 
     public void playAudio() throws FileNotFoundException {
-        if(isPaused){
-            isPaused = false;
-            System.out.println(MusicPlayer.getAudioLength());
+        titleLabel.setText(MusicPlayer.getTitle());
+        if(isPause.getValue()){
+            isPause.set(false);
             playbackSlider.setMax(MusicPlayer.getAudioLength());
             playbackSlider.setValue(0);
             playbackSlider.setMin(0);
-            play_pause_imageView.setImage(Utils.getIcon("pause.png"));
             MusicPlayer.play();
         }else {
-            isPaused = true;
-            play_pause_imageView.setImage(Utils.getIcon("play.png"));
+            isPause.set(true);
             pauseAudio();
         }
     }

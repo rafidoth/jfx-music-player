@@ -1,6 +1,5 @@
 package com.mp.demo.Model;
 
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -12,18 +11,19 @@ public class MusicPlayer {
     private static MediaPlayer mediaPlayer;
     private static double AudioLength;
     private static SimpleDoubleProperty currentPos = new SimpleDoubleProperty(0.0);
-
-
-    public static void setMedia(String path){
+    private static String Title;
+    public static void setMedia(String title){
+        String path = title+ ".mp3";
         sound = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setOnReady(()->{
-            AudioLength = mediaPlayer.getTotalDuration().toMillis();
+            AudioLength = mediaPlayer.getTotalDuration().toSeconds();
+            Title = title;
         });
-        AudioLength = mediaPlayer.getTotalDuration().toMillis();
+//        AudioLength = mediaPlayer.getTotalDuration().toSeconds();
 
         mediaPlayer.currentTimeProperty().addListener((Observable,old,newValue)->{
-            currentPos.set(newValue.toMillis());
+            currentPos.set(newValue.toSeconds());
         });
     }
     public static double getAudioLength(){
@@ -40,6 +40,8 @@ public class MusicPlayer {
     public static SimpleDoubleProperty currentPosistionProperty(){
         return currentPos;
     }
-
+    public static String getTitle(){
+        return Title;
+    }
 
 }

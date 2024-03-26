@@ -13,7 +13,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         MusicPlayerController a = new MusicPlayerController();
-        a.setAudioFile("phone.mp3");
+        a.setAudioFile("phone");
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         stage = Utils.getStage("MusicPlayerView.fxml",1000,800,"Music Player");
         stage.show();

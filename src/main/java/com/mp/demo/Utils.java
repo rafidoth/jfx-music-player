@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.io.IOException;
+import java.sql.Connection;
 
 public class Utils {
     public static Stage getStage(String fxmlFileName, int width, int height, String stageTitle) throws IOException {
@@ -17,6 +18,19 @@ public class Utils {
         stage.setScene(scene);
         System.out.println("ok");
         return  stage;
+    }
+
+    public static void checkDBConnection(){
+        Connection connection = DatabaseConnection.getConnectionInstance();
+        try{
+            if(connection.isClosed()){
+                System.out.println("No Connection");
+            }else{
+                System.out.println("Connection ok");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static Image getIcon(String iconName){

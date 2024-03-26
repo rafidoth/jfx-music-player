@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.PasswordTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.NewUserController">
+   <children>
+      <Text layoutX="64.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello," wrappingWidth="174.4020004272461">
+         <font>
+            <Font name="Inconsolata Bold" size="51.0" />
+         </font>
+      </Text>
+      <Text layoutX="64.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You're probably new here" wrappingWidth="338.4020004272461">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="64.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Let's create an account." wrappingWidth="338.4020004272461">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="500.0" fitWidth="338.0" layoutX="465.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/new_user_screen.jpg" />
+         </image>
+      </ImageView>
+      <PasswordTextField layoutX="64.0" layoutY="273.0" promptText="Password" />
+      <TextField layoutX="64.0" layoutY="224.0" promptText="Username" />
+      <Hyperlink layoutX="68.0" layoutY="317.0" text="Already have an account ?" />
+      <Button layoutX="64.0" layoutY="355.0" mnemonicParsing="false" text="Create Account">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

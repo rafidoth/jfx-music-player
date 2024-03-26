@@ -4,7 +4,8 @@ module com.mp.demo {
     requires javafx.media;
     requires atlantafx.base;
     requires com.jfoenix;
-
+    requires java.sql;
+    requires org.xerial.sqlitejdbc;
 
 
     opens com.mp.demo to javafx.fxml;

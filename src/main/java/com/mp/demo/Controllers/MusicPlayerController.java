@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MusicPlayerController implements Initializable {
@@ -60,7 +61,6 @@ public class MusicPlayerController implements Initializable {
         if(isPause.getValue()){
             isPause.set(false);
             playbackSlider.setMax(MusicPlayer.getAudioLength());
-            playbackSlider.setValue(0);
             playbackSlider.setMin(0);
             MusicPlayer.play();
         }else {

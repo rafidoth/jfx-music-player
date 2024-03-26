@@ -33,10 +33,10 @@
             <Image url="@../../../images/new_user_screen.jpg" />
          </image>
       </ImageView>
-      <PasswordTextField layoutX="64.0" layoutY="273.0" promptText="Password" />
-      <TextField layoutX="64.0" layoutY="224.0" promptText="Username" />
+      <PasswordTextField fx:id="passwordField" layoutX="64.0" layoutY="273.0" promptText="Password" />
+      <TextField fx:id="usernameField" layoutX="64.0" layoutY="224.0" promptText="Username" />
       <Hyperlink layoutX="68.0" layoutY="317.0" text="Already have an account ?" />
-      <Button layoutX="64.0" layoutY="355.0" mnemonicParsing="false" text="Create Account">
+      <Button fx:id="createAccountBtn" layoutX="64.0" layoutY="355.0" mnemonicParsing="false" onAction="#createAccount" text="Create Account">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

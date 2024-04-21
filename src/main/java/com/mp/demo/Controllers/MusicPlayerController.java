@@ -69,7 +69,6 @@ public class MusicPlayerController implements Initializable {
         }
     }
 
-
     public void pauseAudio(){
         MusicPlayer.pause();
     }

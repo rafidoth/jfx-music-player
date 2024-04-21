@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 
 public class Utils {
@@ -18,6 +20,24 @@ public class Utils {
         stage.setScene(scene);
         System.out.println("ok");
         return  stage;
+    }
+
+    public static String getHashedPassword(String plainPassword){
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(plainPassword.getBytes());
+            byte[] res = md.digest();
+            StringBuilder hashed = new StringBuilder();
+            for(byte x:res) hashed.append(String.format("%02x",x));
+            return hashed.toString();
+        }catch (NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static Connection getDBConnection(){
+        return DatabaseConnection.getConnectionInstance();
     }
 
     public static void checkDBConnection(){

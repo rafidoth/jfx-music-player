@@ -9,10 +9,11 @@ import java.util.logging.Logger;
 
 public class DatabaseConnection {
     static Connection connection = null;
+
     public static Connection getConnectionInstance(){
-        checkDrivers();
         if(connection== null){
             try {
+                checkDrivers();
                 connection = DriverManager.getConnection("jdbc:sqlite:ListenTo.sqlite");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -20,7 +21,6 @@ public class DatabaseConnection {
         }
         return connection;
     }
-
     private static boolean checkDrivers() {
         try {
             Class.forName("org.sqlite.JDBC");

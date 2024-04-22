@@ -18,7 +18,7 @@ public class App extends Application {
         MusicPlayerController a = new MusicPlayerController();
         a.setAudioFile("phone");
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-        stage = Utils.getStage("MusicPlayerView.fxml",1000,800,"Music Player");
+        stage = Utils.getStage("NewUserView.fxml",1000,800,"Music Player");
         stage.show();
     }
 

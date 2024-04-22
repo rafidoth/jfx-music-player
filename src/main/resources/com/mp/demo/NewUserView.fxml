@@ -36,7 +36,7 @@
       </ImageView>
       <PasswordTextField fx:id="passwordField" layoutX="64.0" layoutY="273.0" promptText="Password" />
       <TextField fx:id="usernameField" layoutX="64.0" layoutY="224.0" promptText="Username" />
-      <Hyperlink layoutX="62.0" layoutY="321.0" text="Already have an account ?" />
+      <Hyperlink layoutX="62.0" layoutY="321.0" onAction="#goToLogInView" text="Already have an account ?" />
       <Button fx:id="createAccountBtn" layoutX="64.0" layoutY="360.0" mnemonicParsing="false" onAction="#createAccount" text="Create Account">
          <cursor>
             <Cursor fx:constant="HAND" />

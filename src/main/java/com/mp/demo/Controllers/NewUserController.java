@@ -2,6 +2,7 @@ package com.mp.demo.Controllers;
 
 import atlantafx.base.controls.PasswordTextField;
 import com.mp.demo.App;
+import com.mp.demo.Constants;
 import com.mp.demo.Model.UserModel;
 import com.mp.demo.Utils;
 import javafx.fxml.FXML;
@@ -25,6 +26,10 @@ public class NewUserController {
 
     @FXML
     private Label error;
+
+    public void goToLogInView() throws IOException {
+        Utils.setScene("LogInView.fxml", Constants.Screen2width, Constants.Screen2height,"Log In");
+    }
 
     public void createAccount() throws SQLException, IOException {
         String username = usernameField.getText();

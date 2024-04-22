@@ -20,6 +20,36 @@ public class UserModel {
        this.id = id;
    }
 
+   public UserModel(String username, String password){
+       conn = Utils.getDBConnection();
+       this.username = username;
+       this.password = password;
+   }
+
+    public boolean isCorrectAccount() {
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        String sql = "SELECT COUNT(*) FROM users WHERE username = ? AND password = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            res = ps.executeQuery();
+            if (res.next()) {
+                int count = res.getInt(1);
+                return count == 1; // Return true if there's a match
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            // Close resources
+            Utils.closeResultSet(res);
+            Utils.closeStatement(ps);
+        }
+    }
+
+
     public boolean isUsernameAvailable() {
         PreparedStatement ps = null;
         ResultSet res = null;

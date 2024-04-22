@@ -8,18 +8,25 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Utils {
     public static Stage getStage(String fxmlFileName, int width, int height, String stageTitle) throws IOException {
-        System.out.println("hello1");
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlFileName));
-        System.out.println("Hello 2");
         Scene scene = new Scene(fxmlLoader.load(),width,height);
         Stage stage = new Stage();
         stage.setTitle(stageTitle);
         stage.setScene(scene);
-        System.out.println("ok");
         return  stage;
+    }
+
+    public static void setScene(String fxmlFileName, int width, int height, String stageTitle) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlFileName));
+        Scene scene = new Scene(fxmlLoader.load(),width,height);
+        App.primaryStage.setTitle(stageTitle);
+        App.primaryStage.setScene(scene);
     }
 
     public static void setStage(String fxmlFileName, int width, int height, String stageTitle) throws IOException {
@@ -69,4 +76,26 @@ public class Utils {
 //        System.out.println(img.getUrl());
         return img;
     }
+
+    public static void closeResultSet(ResultSet res) {
+        if (res != null) {
+            try {
+                res.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void closeStatement(PreparedStatement ps) {
+        if (ps != null) {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
+

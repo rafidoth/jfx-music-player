@@ -2,10 +2,10 @@ package com.mp.demo.Controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
-import com.mp.demo.Model.MusicPlayer;
 import com.mp.demo.Utils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -13,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,18 +33,56 @@ public class MusicPlayerController implements Initializable {
     private Label timestamp;
     @FXML
     private Label titleLabel;
+    MediaPlayer mediaPlayer;
+    private static double AudioLength;
+    private boolean isChanging = false;
+    private int changedSlider = 0;
+    public MusicPlayerController(){
+        mediaPlayer = new MediaPlayer(new Media("http://localhost:3000/audio/123456"));
+//        mediaPlayer = new MediaPlayer(new Media(new File("phone.mp3").toURI().toString()));
+        mediaPlayer.setOnReady(()->{
+            AudioLength = mediaPlayer.getTotalDuration().toSeconds();
 
+        });
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         playbackSlider.setValue(0.0);
-        MusicPlayer.currentPosistionProperty().addListener(((observableValue, number, t1) -> {
-            int hour = t1.intValue() /3600;
-            int minute = (t1.intValue()%3600)/60;
-            int second = t1.intValue() %60;
-            timestamp.setText(hour+":"+minute+":"+second);
-            playbackSlider.setValue((double)t1);
+        playbackSlider.valueChangingProperty().addListener(((observableValue, number, t1) -> {
+            isChanging = t1;
+            if(!isChanging){
+                mediaPlayer.seek(Duration.seconds(changedSlider));
+            }
         }));
+        playbackSlider.valueProperty().addListener(((observableValue, number, t1) -> {
+            if (isChanging) {
+                changedSlider = t1.intValue();
+                int newValue = (int) Duration.seconds(t1.intValue()).toSeconds();
+                int hour = newValue/3600;
+                int minute = (newValue%3600)/60;
+                int second = newValue %60;
+                timestamp.setText(hour+":"+minute+":"+second);
+            } else {
+                int change = Math.abs(t1.intValue() - number.intValue());
+                if (change > 10) {
+                    mediaPlayer.seek(Duration.seconds(t1.intValue()));
+                }
+            }
+        }));
+
+        mediaPlayer.currentTimeProperty().addListener(((observableValue, number, t1) -> {
+            if(!isChanging){
+                int newValue = (int)t1.toSeconds();
+                int hour = newValue/3600;
+                int minute = (newValue%3600)/60;
+                int second = newValue %60;
+                timestamp.setText(hour+":"+minute+":"+second);
+                playbackSlider.setValue(newValue);
+                System.out.println(t1.toSeconds());
+            }
+        }));
+
 
         isPause.addListener(((observableValue, aBoolean, t1) -> {
             if(t1)
@@ -52,17 +92,14 @@ public class MusicPlayerController implements Initializable {
         }));
     }
 
-    public void setAudioFile(String name){
-        MusicPlayer.setMedia(name);
-    }
 
     public void playAudio() throws FileNotFoundException {
-        titleLabel.setText(MusicPlayer.getTitle());
+        titleLabel.setText("Lorem Ipsum");
         if(isPause.getValue()){
             isPause.set(false);
-            playbackSlider.setMax(MusicPlayer.getAudioLength());
+            playbackSlider.setMax(AudioLength);
             playbackSlider.setMin(0);
-            MusicPlayer.play();
+            mediaPlayer.play();
         }else {
             isPause.set(true);
             pauseAudio();
@@ -70,7 +107,7 @@ public class MusicPlayerController implements Initializable {
     }
 
     public void pauseAudio(){
-        MusicPlayer.pause();
+        mediaPlayer.pause();
     }
 
 

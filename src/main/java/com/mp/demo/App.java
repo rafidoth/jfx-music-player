@@ -16,9 +16,9 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Utils.checkDBConnection();
         MusicPlayerController a = new MusicPlayerController();
-        a.setAudioFile("phone");
+//        a.setAudioFile("phone");
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-        stage = Utils.getStage("NewUserView.fxml",1000,800,"Music Player");
+        stage = Utils.getStage("MusicPlayerView.fxml",1000,800,"Music Player");
         stage.show();
     }
 

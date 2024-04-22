@@ -20,29 +20,43 @@ public class UserModel {
        this.id = id;
    }
 
-   public boolean isAlreadyHasAccount() throws SQLException {
-       PreparedStatement ps = null;
-       ResultSet res = null;
-       String sql = "select * from users where id = ? & username = ? and password = ? ";
-       try {
-           ps = conn.prepareStatement(sql);
-           ps.setString(1,id);
-           ps.setString(2,username);
-           ps.setString(3,password);
-           res = ps.executeQuery();
-           if(res.next()) return true;
-           else return false;
+    public boolean isUsernameAvailable() {
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            res = ps.executeQuery();
+            if (res.next()) {
+                int count = res.getInt(1);
+                return count == 0;
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            if (res != null) {
+                try {
+                    res.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
-       } catch (SQLException e) {
-           throw new RuntimeException(e);
-       }finally {
-            ps.close();
-            res.close();
-            conn.close();
-       }
 
-   }
-   public boolean createAccount() throws SQLException {
+
+
+    public boolean createAccount() throws SQLException {
        PreparedStatement ps = null;
        String query = "INSERT INTO users (username, password, id) \n" + "VALUES (?,?,?);";
        try{
@@ -63,18 +77,6 @@ public class UserModel {
                } catch (SQLException e) {
                    e.printStackTrace();
                }
-           }
-
-           try {
-               if (conn != null && !conn.isClosed()) {
-                   if (!conn.getAutoCommit()) {
-                       conn.commit();
-                       conn.setAutoCommit(true);
-                   }
-                   conn.close();
-               }
-           } catch (SQLException sqle) {
-               sqle.printStackTrace();
            }
        }
 

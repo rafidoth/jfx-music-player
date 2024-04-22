@@ -22,6 +22,15 @@ public class Utils {
         return  stage;
     }
 
+    public static void setStage(String fxmlFileName, int width, int height, String stageTitle) throws IOException {
+        Stage stage = getStage(fxmlFileName,width,height,stageTitle);
+        if(App.primaryStage!=null){
+            App.primaryStage.close();
+        }
+        App.primaryStage = stage;
+        App.primaryStage.show();
+    }
+
     public static String getHashedPassword(String plainPassword){
         try{
             MessageDigest md = MessageDigest.getInstance("MD5");

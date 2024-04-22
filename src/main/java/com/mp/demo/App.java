@@ -12,15 +12,17 @@ import java.io.IOException;
 import java.sql.Connection;
 
 public class App extends Application {
+    public static Stage primaryStage;
     @Override
     public void start(Stage stage) throws IOException {
         Utils.checkDBConnection();
         MusicPlayerController a = new MusicPlayerController();
-//        a.setAudioFile("phone");
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-        stage = Utils.getStage("MusicPlayerView.fxml",1000,800,"Music Player");
-        stage.show();
+        stage = Utils.getStage("NewUserView.fxml",800,500,"Music Player");
+        primaryStage = stage;
+        primaryStage.show();
     }
+
 
     public static void main(String[] args) {
         launch();

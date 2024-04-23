@@ -35,21 +35,9 @@ public class DashboardController implements Initializable {
         }
 
         // homebtn
-        homebtn.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;");
-        homebtn.setOnMouseEntered(e -> {
-            homebtn.setStyle("-fx-background-color: #1DB954;-fx-background-radius: 10px; -fx-padding : 10px;");
-            homebtn.setCursor(Cursor.HAND);
-        });
-        homebtn.setOnMouseExited(e -> homebtn.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;"));
-        homebtn.setOnMouseClicked(e -> System.out.println("Button clicked!"));
+        makeButtonFromHBOX(homebtn);
         // lib btn
-        libBtn.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;");
-        libBtn.setOnMouseEntered(e -> {
-            libBtn.setStyle("-fx-background-color: #1DB954;-fx-background-radius: 10px; -fx-padding : 10px;");
-            libBtn.setCursor(Cursor.HAND);
-        });
-        libBtn.setOnMouseExited(e -> libBtn.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;"));
-        libBtn.setOnMouseClicked(e -> System.out.println("Button clicked!"));
+        makeButtonFromHBOX(libBtn);
 
         //Friends View
         for(int i =1;i<50;i+=10){
@@ -65,10 +53,24 @@ public class DashboardController implements Initializable {
             FriendViewController friendViewController = loader.getController();
             friendViewController.setImage(url);
             friendViewController.setName(name);
+
+            //style
+            makeButtonFromHBOX(friendView);
+
             friendsView.getChildren().add(friendView);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void  makeButtonFromHBOX(HBox hBox){
+        hBox.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;");
+        hBox.setOnMouseEntered(e -> {
+            hBox.setStyle("-fx-background-color: #1DB954;-fx-background-radius: 10px; -fx-padding : 10px;");
+            hBox.setCursor(Cursor.HAND);
+        });
+        hBox.setOnMouseExited(e -> hBox.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;"));
+        hBox.setOnMouseClicked(e -> System.out.println("Button clicked!"));
     }
 }
 

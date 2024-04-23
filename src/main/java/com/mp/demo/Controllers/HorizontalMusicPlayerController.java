@@ -1,4 +1,122 @@
 package com.mp.demo.Controllers;
 
-public class HorizontalMusicPlayerController {
+import com.jfoenix.controls.JFXSlider;
+import com.mp.demo.Utils;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class HorizontalMusicPlayerController implements Initializable {
+    @FXML
+    private ImageView playbackSwitch;
+    @FXML
+    private JFXSlider VolumeSlider;
+    @FXML
+    private ImageView  nextSwitch;
+    @FXML
+    private ImageView  prevSwitch;
+    @FXML
+    private Text TimeStamp;
+    @FXML
+    private JFXSlider PlaybackSlider;
+    private boolean isChanging = false;
+    private MediaPlayer mediaPlayer;
+    private int changedSlider = 0;
+    private SimpleBooleanProperty isPause = new SimpleBooleanProperty(true);
+    private static double AudioLength;
+    public HorizontalMusicPlayerController(){
+        mediaPlayer = new MediaPlayer(new Media("http://localhost:3000/audio/123456"));
+//        mediaPlayer = new MediaPlayer(new Media(new File("phone.mp3").toURI().toString()));
+        mediaPlayer.setOnReady(()->{
+            AudioLength = mediaPlayer.getTotalDuration().toSeconds();
+
+        });
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        PlaybackSlider.setValue(0.0);
+        PlaybackSlider.valueChangingProperty().addListener(((observableValue, number, t1) -> {
+            isChanging = t1;
+            if(!isChanging){
+                mediaPlayer.seek(Duration.seconds(changedSlider));
+            }
+        }));
+
+        PlaybackSlider.valueProperty().addListener(((observableValue, number, t1) -> {
+            if (isChanging) {
+                changedSlider = t1.intValue();
+                int newValue = (int) Duration.seconds(t1.intValue()).toSeconds();
+                int hour = newValue/3600;
+                int minute = (newValue%3600)/60;
+                int second = newValue %60;
+                TimeStamp.setText(hour+":"+minute+":"+second);
+            } else {
+                int change = Math.abs(t1.intValue() - number.intValue());
+                if (change > 10) {
+                    mediaPlayer.seek(Duration.seconds(t1.intValue()));
+                }
+            }
+        }));
+        mediaPlayer.currentTimeProperty().addListener(((observableValue, number, t1) -> {
+            if(!isChanging){
+                int newValue = (int)t1.toSeconds();
+                int hour = newValue/3600;
+                int minute = (newValue%3600)/60;
+                int second = newValue %60;
+                TimeStamp.setText(hour+":"+minute+":"+second);
+                PlaybackSlider.setValue(newValue);
+                System.out.println(t1.toSeconds());
+            }
+        }));
+
+        isPause.addListener(((observableValue, aBoolean, t1) -> {
+            if(t1)
+                playbackSwitch.setImage(Utils.getIcon("play.png"));
+            else
+                playbackSwitch.setImage(Utils.getIcon("pause.png"));
+        }));
+
+        playbackSwitch.setOnMouseEntered(e -> {
+            playbackSwitch.setCursor(Cursor.HAND);
+        });
+        playbackSwitch.setOnMouseClicked(e -> {
+            playAudio();
+        });
+
+
+        VolumeSlider.valueProperty().addListener(((observableValue, number, t1) -> {
+            mediaPlayer.setVolume(VolumeSlider.getValue()*0.01);
+        }));
+
+
+
+    }
+
+    public void playAudio(){
+        if(isPause.getValue()){
+            isPause.set(false);
+            PlaybackSlider.setMax(AudioLength);
+            PlaybackSlider.setMin(0);
+            mediaPlayer.play();
+        }else {
+            isPause.set(true);
+            pauseAudio();
+        }
+    }
+
+    public void pauseAudio(){
+        mediaPlayer.pause();
+    }
+
 }

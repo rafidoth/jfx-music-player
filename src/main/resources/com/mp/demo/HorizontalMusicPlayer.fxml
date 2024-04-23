@@ -1,11 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="80.0" prefWidth="1440.0" style="-fx-background-color: #1DB954;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.HorizontalMusicPlayerController">
+<AnchorPane prefHeight="80.0" prefWidth="1440.0" style="-fx-background-color: #242424; -fx-background-radius: 50px;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.HorizontalMusicPlayerController">
    <children>
-      <Label layoutX="493.0" layoutY="31.0" text="mnsda" />
+      <HBox prefHeight="80.0" prefWidth="1440.0" style="-fx-background-color: #242424; -fx-background-radius: 15px;">
+         <children>
+            <HBox prefHeight="80.0" prefWidth="480.0" />
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="80.0" prefWidth="480.0">
+               <children>
+                  <AnchorPane prefHeight="80.0" prefWidth="481.0">
+                     <children>
+                        <ImageView fx:id="playbackSwitch" fitHeight="32.0" fitWidth="27.0" layoutX="227.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/play.png" />
+                           </image>
+                        </ImageView>
+                        <JFXSlider fx:id="PlaybackSlider" layoutX="59.0" layoutY="50.0" prefHeight="16.0" prefWidth="360.0" stylesheets="@slider.css" />
+                        <ImageView fx:id="nextSwitch" fitHeight="32.0" fitWidth="27.0" layoutX="268.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/icons8-next-96.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="prevSwitch" fitHeight="32.0" fitWidth="27.0" layoutX="181.0" layoutY="14.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/icons8-next-96.png" />
+                           </image>
+                        </ImageView>
+                        <Text fx:id="TimeStamp" fill="WHITE" layoutX="367.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <HBox layoutX="490.0" layoutY="10.0" prefHeight="80.0" prefWidth="480.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="80.0" prefWidth="235.0">
+                     <children>
+                        <JFXSlider fx:id="VolumeSlider" blockIncrement="15.0" layoutX="137.0" layoutY="32.0" prefHeight="16.0" prefWidth="103.0" stylesheets="@slider.css">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXSlider>
+                        <ImageView fx:id="nextSwitch1" fitHeight="32.0" fitWidth="27.0" layoutX="92.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/volume.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children></HBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

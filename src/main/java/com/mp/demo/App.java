@@ -18,7 +18,7 @@ public class App extends Application {
         Utils.checkDBConnection();
         MusicPlayerController a = new MusicPlayerController();
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-        stage = Utils.getStage("NewUserView.fxml",800,500,"Music Player");
+        stage = Utils.getStage("Dashboard.fxml",Constants.Screen1width,Constants.Screen1height,"Music Player");
         primaryStage = stage;
         primaryStage.show();
     }

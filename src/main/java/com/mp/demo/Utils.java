@@ -22,6 +22,10 @@ public class Utils {
         return  stage;
     }
 
+    public static FXMLLoader loadFXML(String file){
+        return new FXMLLoader(App.class.getResource(file));
+    }
+
     public static void setScene(String fxmlFileName, int width, int height, String stageTitle) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlFileName));
         Scene scene = new Scene(fxmlLoader.load(),width,height);
@@ -71,6 +75,14 @@ public class Utils {
 
     public static Image getIcon(String iconName){
         String path = App.class.getResource("icons/"+iconName).toString();
+//        System.out.println(path);
+        Image img = new Image(path);
+//        System.out.println(img.getUrl());
+        return img;
+    }
+
+    public static Image getImage(String imageFileName){
+        String path = App.class.getResource("images/"+imageFileName).toString();
 //        System.out.println(path);
         Image img = new Image(path);
 //        System.out.println(img.getUrl());

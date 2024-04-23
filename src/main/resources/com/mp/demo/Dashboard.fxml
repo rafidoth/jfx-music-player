@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1440.0" stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.DashboardController">
+   <children>
+      <AnchorPane fx:id="bottomPlayer" layoutY="822.0" prefHeight="80.0" prefWidth="1440.0" />
+      <VBox layoutX="19.0" layoutY="12.0" prefHeight="137.0" prefWidth="381.0" spacing="10.0" styleClass="box">
+         <children>
+            <HBox fx:id="homebtn" alignment="CENTER_LEFT" prefHeight="11.0" prefWidth="372.0">
+               <children>
+                  <ImageView fitHeight="41.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../icons/icons8-home-500.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></ImageView>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Home">
+                     <font>
+                        <Font size="19.0" />
+                     </font></Text>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="libBtn" alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" prefHeight="11.0" prefWidth="372.0">
+               <children>
+                  <ImageView fitHeight="41.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../icons/icons8-library-100.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Library">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+         </children></VBox>
+      <VBox fx:id="friendsView" layoutX="19.0" layoutY="167.0" prefHeight="644.0" prefWidth="381.0" styleClass="box">
+         <children>
+            <Label text="Friends" textFill="WHITE">
+               <font>
+                  <Font name="Noto Sans Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding></VBox>
+      <AnchorPane layoutX="414.0" layoutY="100.0" prefHeight="715.0" prefWidth="1006.0" styleClass="box" />
+      <HBox alignment="CENTER_RIGHT" layoutX="414.0" layoutY="13.0" prefHeight="70.0" prefWidth="1006.0" styleClass="box">
+         <children>
+            <Circle fill="#1fff71" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

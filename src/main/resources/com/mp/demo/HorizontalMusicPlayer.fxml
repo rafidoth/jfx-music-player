@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="80.0" prefWidth="1440.0" style="-fx-background-color: #1DB954;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.HorizontalMusicPlayerController">
+   <children>
+      <Label layoutX="493.0" layoutY="31.0" text="mnsda" />
+   </children>
+</AnchorPane>

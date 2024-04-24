@@ -19,12 +19,13 @@ public class LogInController {
     @FXML
     private Label error;
 
-    public void checkCredentials(){
+    public void checkCredentials() throws IOException {
         String username = usernameField.getText();
         String password = Utils.getHashedPassword(passwordField.getPassword());
         UserModel user = new UserModel(username,password);
         if(user.isCorrectAccount()){
             System.out.println("switch to a scene");
+            Utils.setScene("Dashboard.fxml",Constants.Screen1width, Constants.Screen1height,"Music Player");
         }else{
             error.setText("Wrong credentials. Please check again.");
             error.setTextFill(Color.RED);

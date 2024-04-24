@@ -1,7 +1,6 @@
 package com.mp.demo;
 
 import atlantafx.base.theme.PrimerDark;
-import com.mp.demo.Controllers.MusicPlayerController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,7 +15,6 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Utils.checkDBConnection();
-        MusicPlayerController a = new MusicPlayerController();
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         stage = Utils.getStage("Dashboard.fxml",Constants.Screen1width,Constants.Screen1height,"Music Player");
         primaryStage = stage;

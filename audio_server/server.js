@@ -10,6 +10,7 @@ app.get('/audio/:musicId', (req, res) => {
     const audioFilePath = path.join(audioDirectory, `${musicId}.mp3`);
     console.log(audioFilePath);
     if (!fs.existsSync(audioFilePath)) {
+        console.log("file not found");
         return res.status(404).send('Audio file not found');
     }
 

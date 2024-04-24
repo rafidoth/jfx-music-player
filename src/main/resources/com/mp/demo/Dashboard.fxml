@@ -52,7 +52,7 @@
                </children>
             </HBox>
          </children></VBox>
-      <VBox fx:id="friendsView" layoutX="19.0" layoutY="167.0" prefHeight="644.0" prefWidth="381.0" styleClass="box">
+      <VBox fx:id="friendsView" layoutX="19.0" layoutY="167.0" prefHeight="636.0" prefWidth="381.0" spacing="10.0" styleClass="box">
          <children>
             <Label text="Friends" textFill="WHITE">
                <font>
@@ -63,7 +63,15 @@
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding></VBox>
-      <AnchorPane layoutX="414.0" layoutY="100.0" prefHeight="715.0" prefWidth="1006.0" styleClass="box" />
+      <AnchorPane layoutX="414.0" layoutY="100.0" prefHeight="705.0" prefWidth="1006.0" styleClass="box">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Based on Artitsts" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <HBox fx:id="musicBox" layoutX="14.0" layoutY="70.0" prefHeight="137.0" prefWidth="967.0" spacing="10.0" />
+         </children></AnchorPane>
       <HBox alignment="CENTER_RIGHT" layoutX="414.0" layoutY="13.0" prefHeight="70.0" prefWidth="1006.0" styleClass="box">
          <children>
             <Circle fill="#1fff71" radius="25.0" stroke="BLACK" strokeType="INSIDE" />

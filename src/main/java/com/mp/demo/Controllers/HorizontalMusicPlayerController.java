@@ -31,21 +31,26 @@ public class HorizontalMusicPlayerController implements Initializable {
     @FXML
     private JFXSlider PlaybackSlider;
     private boolean isChanging = false;
-    private MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
     private int changedSlider = 0;
     private SimpleBooleanProperty isPause = new SimpleBooleanProperty(true);
     private static double AudioLength;
     public HorizontalMusicPlayerController(){
-        mediaPlayer = new MediaPlayer(new Media("http://localhost:3000/audio/123456"));
-//        mediaPlayer = new MediaPlayer(new Media(new File("phone.mp3").toURI().toString()));
+
+
+    }
+    public void setNewMedia(int musicId){
+        mediaPlayer = new MediaPlayer(new Media("http://localhost:3000/audio/"+musicId));
         mediaPlayer.setOnReady(()->{
             AudioLength = mediaPlayer.getTotalDuration().toSeconds();
-
+            PlaybackSlider.setMax(AudioLength);
+            PlaybackSlider.setMin(0);
+            PlaybackSlider.setValue(0.0);
+            mediaPlayer.play();
+            isPause.set(false);
         });
-    }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
         PlaybackSlider.setValue(0.0);
+
         PlaybackSlider.valueChangingProperty().addListener(((observableValue, number, t1) -> {
             isChanging = t1;
             if(!isChanging){
@@ -76,38 +81,41 @@ public class HorizontalMusicPlayerController implements Initializable {
                 int second = newValue %60;
                 TimeStamp.setText(hour+":"+minute+":"+second);
                 PlaybackSlider.setValue(newValue);
-                System.out.println(t1.toSeconds());
+//                System.out.println(t1.toSeconds());
             }
         }));
-
-        isPause.addListener(((observableValue, aBoolean, t1) -> {
-            if(t1)
-                playbackSwitch.setImage(Utils.getIcon("play.png"));
-            else
-                playbackSwitch.setImage(Utils.getIcon("pause.png"));
-        }));
-
-        playbackSwitch.setOnMouseEntered(e -> {
-            playbackSwitch.setCursor(Cursor.HAND);
-        });
-        playbackSwitch.setOnMouseClicked(e -> {
-            playAudio();
-        });
 
 
         VolumeSlider.valueProperty().addListener(((observableValue, number, t1) -> {
             mediaPlayer.setVolume(VolumeSlider.getValue()*0.01);
         }));
 
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+            PlaybackSlider.setValue(0.0);
+            playbackSwitch.setOnMouseEntered(e -> {
+                playbackSwitch.setCursor(Cursor.HAND);
+            });
 
+            isPause.addListener(((observableValue, aBoolean, t1) -> {
+                if(t1)
+                    playbackSwitch.setImage(Utils.getIcon("play.png"));
+                else
+                    playbackSwitch.setImage(Utils.getIcon("pause.png"));
+            }));
+
+            playbackSwitch.setOnMouseClicked(e -> {
+                if(mediaPlayer!=null){
+                    playAudio();
+                }
+            });
 
     }
 
     public void playAudio(){
         if(isPause.getValue()){
             isPause.set(false);
-            PlaybackSlider.setMax(AudioLength);
-            PlaybackSlider.setMin(0);
             mediaPlayer.play();
         }else {
             isPause.set(true);

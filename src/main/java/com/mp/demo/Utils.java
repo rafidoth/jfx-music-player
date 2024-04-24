@@ -89,6 +89,18 @@ public class Utils {
         return img;
     }
 
+    public static Image getAlbumImage(String imageFileName){
+        String path = null;
+        try {
+            path = App.class.getResource("albumImages/"+imageFileName).toString();
+        } catch (Exception e) {
+            return Utils.getImage("default_player_album.png");
+
+        }
+        Image img = new Image(path);
+        return img;
+    }
+
     public static void closeResultSet(ResultSet res) {
         if (res != null) {
             try {

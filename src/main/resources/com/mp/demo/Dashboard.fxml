@@ -81,15 +81,21 @@
                         <HBox fx:id="musicBox" layoutX="14.0" layoutY="70.0" prefHeight="137.0" prefWidth="967.0" spacing="10.0" />
                      </children>
                   </AnchorPane>
-                  <HBox alignment="CENTER_RIGHT" layoutX="420.0" layoutY="14.0" prefHeight="70.0" prefWidth="1006.0" styleClass="box">
+                  <HBox alignment="CENTER_RIGHT" layoutX="420.0" layoutY="14.0" prefHeight="70.0" prefWidth="1000.0" spacing="20.0" styleClass="box">
                      <children>
-                        <StackPane fx:id="profile" prefHeight="50.0" prefWidth="58.0">
+                        <AnchorPane fx:id="searchBarContainer" prefHeight="50.0" prefWidth="595.0" />
+                        <HBox alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="400.0">
                            <children>
-                              <Circle fill="#005ce6" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                              <StackPane fx:id="profile" prefHeight="50.0" prefWidth="58.0">
+                                 <children>
+                                    <Circle fill="#005ce6" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                                 </children>
+                              </StackPane>
                            </children>
-                        </StackPane>
+                        </HBox>
                      </children>
                   </HBox>
+                  <VBox fx:id="searchResult" layoutX="432.0" layoutY="84.0" prefHeight="52.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #0d1117; -fx-background-radius: 15px;" />
                </children>
             </AnchorPane>
          </children>

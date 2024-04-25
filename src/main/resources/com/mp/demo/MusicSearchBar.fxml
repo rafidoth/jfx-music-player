@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.MusicSearchBarController">
+   <children>
+      <TextField fx:id="musicSearchInput" layoutY="15.0" prefHeight="40.0" prefWidth="550.0" style="-fx-border-radius: 20px; -fx-background-radius: 20px;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <ImageView fx:id="close" fitHeight="30.0" fitWidth="30.0" layoutX="561.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/icons8-close-100.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

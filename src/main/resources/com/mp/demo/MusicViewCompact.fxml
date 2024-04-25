@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="CompactMV" prefHeight="90.0" prefWidth="500.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.MusicViewCompactController">
+   <children>
+      <Text fx:id="title" layoutX="7.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="490.4701690673828">
+         <font>
+            <Font name="Inter Light" size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="8.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Artist" wrappingWidth="41.47016906738281">
+         <font>
+            <Font name="Inter Light" size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="177.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre" wrappingWidth="162.4701690673828">
+         <font>
+            <Font name="Inter Light" size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="album" layoutX="337.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="162.4701690673828">
+         <font>
+            <Font name="Inter Light" size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="artist" layoutX="8.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Artist" wrappingWidth="154.4701690673828">
+         <font>
+            <Font name="Inter Light" size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="genre" layoutX="177.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="162.4701690673828">
+         <font>
+            <Font name="Inter Light" size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="album1" layoutX="336.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album" wrappingWidth="162.4701690673828">
+         <font>
+            <Font name="Inter Light" size="15.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

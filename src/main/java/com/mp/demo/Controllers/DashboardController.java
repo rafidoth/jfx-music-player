@@ -4,6 +4,7 @@ import com.mp.demo.CentralUser;
 import com.mp.demo.Constants;
 import com.mp.demo.Model.MusicModel;
 import com.mp.demo.Utils;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,15 +42,21 @@ public class DashboardController implements Initializable {
     private AnchorPane mainDashboardView;
     private AnchorPane storedMaindashboardView;
 
+    @FXML
+    private AnchorPane searchBarContainer;
+    @FXML
+    private VBox searchResult;
+
 
     ArrayList<MusicModel> musicsList;
     @FXML
     private StackPane profile;
 
     public HorizontalMusicPlayerController hmp;
+    public MusicSearchBarController msc;
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        searchResult.setVisible(false);
         storedMaindashboardView = mainDashboardView;
-        System.out.println(storedMaindashboardView);
         FXMLLoader loader = Utils.loadFXML("HorizontalMusicPlayer.fxml");
         try {
             AnchorPane temp = loader.load();
@@ -62,6 +69,21 @@ public class DashboardController implements Initializable {
             throw new RuntimeException(e);
         }
         hmp = loader.getController();
+
+        loader = Utils.loadFXML("MusicSearchBar.fxml");
+        try {
+            AnchorPane temp = loader.load();
+            AnchorPane.setTopAnchor(temp, 0.0);
+            AnchorPane.setRightAnchor(temp, 0.0);
+            AnchorPane.setBottomAnchor(temp, 0.0);
+            AnchorPane.setLeftAnchor(temp, 0.0);
+            searchBarContainer.getChildren().add(temp);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        msc =loader.getController();
+
+
 
         // homebtn
         makeButtonFromHBOX(homebtn);
@@ -78,6 +100,7 @@ public class DashboardController implements Initializable {
         for(int i=0;i<5;i++){
             addMusicView(musicsList.get(i));
         }
+
     }
 
     public void addMusicView(MusicModel music) {
@@ -170,6 +193,43 @@ public class DashboardController implements Initializable {
         ParentContainer.getChildren().clear();
         ParentContainer.getChildren().add(storedMaindashboardView);
     }
+
+    public void showMusicSearchResult(String text)  {
+        if(text.equals("")){
+            searchResult.setVisible(false);
+            msc.close.setVisible(false);
+            searchResult.getChildren().clear();
+        }else{
+            searchResult.getChildren().clear();
+            ArrayList<MusicModel> mlist = new MusicModel().searchMusic(text);
+            System.out.println(mlist);
+            if(mlist.size()>0){
+                searchResult.setVisible(true);
+                msc.close.setVisible(true);
+                int len = Math.min(5, mlist.size());
+                for(int i =0;i<len;i++){
+                    FXMLLoader loader = Utils.loadFXML("MusicViewCompact.fxml");
+                    AnchorPane ap = null;
+                    try {
+                        ap = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    final int I = i;
+                    ap.setOnMouseClicked(e -> CentralUser.dashboardController.playMusicInHorizontalPlayer(mlist.get(I)));
+                    MusicViewCompactController contr = loader.getController();
+                    contr.setMusic(mlist.get(i));
+                    searchResult.getChildren().add(ap);
+                }
+            }
+
+        }
+    }
+
+    public void playMusicInHorizontalPlayer(MusicModel music){
+        hmp.setNewMedia(music);
+    }
+
 }
 
 

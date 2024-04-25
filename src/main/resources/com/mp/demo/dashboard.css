@@ -1,5 +1,5 @@
 .box{
-    -fx-background-color : #25292e;
+    -fx-background-color : transparent;
     -fx-background-radius : 10px;
     -fx-padding : 10px;
 }

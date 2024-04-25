@@ -115,4 +115,37 @@ public class MusicModel {
 
         return musics;
     }
+
+    public ArrayList<MusicModel> searchMusic(String searchString) {
+        ArrayList<MusicModel> musics = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        String sql = "SELECT * FROM musics WHERE title LIKE ? OR artist LIKE ? OR genre LIKE ? OR album LIKE ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            String likeSearch = "%" + searchString + "%";
+            ps.setString(1, likeSearch);
+            ps.setString(2, likeSearch);
+            ps.setString(3, likeSearch);
+            ps.setString(4, likeSearch);
+            res = ps.executeQuery();
+            while (res.next()) {
+                MusicModel music = new MusicModel();
+                music.setMusicId(res.getInt("musicId"));
+                music.setArtist(res.getString("artist"));
+                music.setGenre(res.getString("genre"));
+                music.setAlbum(res.getString("album"));
+                music.setTitle(res.getString("title"));
+                musics.add(music);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            // Close resources
+            Utils.closeResultSet(res);
+            Utils.closeStatement(ps);
+        }
+
+        return musics;
+    }
 }

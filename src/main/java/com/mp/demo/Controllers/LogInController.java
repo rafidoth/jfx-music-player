@@ -1,10 +1,12 @@
 package com.mp.demo.Controllers;
 
 import atlantafx.base.controls.PasswordTextField;
+import com.mp.demo.CentralUser;
 import com.mp.demo.Constants;
 import com.mp.demo.Model.UserModel;
 import com.mp.demo.Utils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -24,8 +26,10 @@ public class LogInController {
         String password = Utils.getHashedPassword(passwordField.getPassword());
         UserModel user = new UserModel(username,password);
         if(user.isCorrectAccount()){
-            System.out.println("switch to a scene");
-            Utils.setScene("Dashboard.fxml",Constants.Screen1width, Constants.Screen1height,"Music Player");
+            CentralUser.loggedInUser = user;
+            FXMLLoader loader =  Utils.getLoaderSetScene("Dashboard.fxml");
+            CentralUser.dashboardController = loader.getController();
+            CentralUser.dashboardController.setProfile();
         }else{
             error.setText("Wrong credentials. Please check again.");
             error.setTextFill(Color.RED);

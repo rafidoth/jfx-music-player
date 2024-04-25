@@ -1,6 +1,8 @@
 package com.mp.demo.Model;
 
 import com.mp.demo.Utils;
+import javafx.scene.image.Image;
+import javafx.scene.shape.Circle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +11,9 @@ import java.sql.SQLException;
 
 public class UserModel {
     Connection conn;
-    private String id;
-    private String username;
-    private String password;
+    public String id;
+    public String username;
+    public String password;
 
    public UserModel(String id, String username, String password){
        conn = Utils.getDBConnection();

@@ -1,6 +1,9 @@
 package com.mp.demo.Controllers;
 
 import com.jfoenix.controls.JFXSlider;
+import com.mp.demo.App;
+import com.mp.demo.Constants;
+import com.mp.demo.Model.MusicModel;
 import com.mp.demo.Utils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -9,11 +12,16 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -35,12 +43,23 @@ public class HorizontalMusicPlayerController implements Initializable {
     private int changedSlider = 0;
     private SimpleBooleanProperty isPause = new SimpleBooleanProperty(true);
     private static double AudioLength;
+    @FXML
+    private ImageView albumPoster;
+    @FXML
+    private Text titleText;
+    @FXML
+    private Text artistText;
+    @FXML
+    private Text genreText;
+    @FXML
+    private HBox leftHbox;
+
     public HorizontalMusicPlayerController(){
 
 
     }
-    public void setNewMedia(int musicId){
-        mediaPlayer = new MediaPlayer(new Media("http://localhost:3000/audio/"+musicId));
+    public void setNewMedia(MusicModel music){
+        mediaPlayer = new MediaPlayer(new Media("http://localhost:3000/audio/"+music.getMusicId()));
         mediaPlayer.setOnReady(()->{
             AudioLength = mediaPlayer.getTotalDuration().toSeconds();
             PlaybackSlider.setMax(AudioLength);
@@ -49,6 +68,10 @@ public class HorizontalMusicPlayerController implements Initializable {
             mediaPlayer.play();
             isPause.set(false);
         });
+        albumPoster.setImage(Utils.getAlbumImage(music.getAlbum()+".png"));
+        titleText.setText(music.getTitle());
+        artistText.setText(music.getArtist());
+        genreText.setText(music.getGenre());
         PlaybackSlider.setValue(0.0);
 
         PlaybackSlider.valueChangingProperty().addListener(((observableValue, number, t1) -> {
@@ -81,7 +104,6 @@ public class HorizontalMusicPlayerController implements Initializable {
                 int second = newValue %60;
                 TimeStamp.setText(hour+":"+minute+":"+second);
                 PlaybackSlider.setValue(newValue);
-//                System.out.println(t1.toSeconds());
             }
         }));
 
@@ -89,6 +111,24 @@ public class HorizontalMusicPlayerController implements Initializable {
         VolumeSlider.valueProperty().addListener(((observableValue, number, t1) -> {
             mediaPlayer.setVolume(VolumeSlider.getValue()*0.01);
         }));
+
+        leftHbox.setOnMouseEntered(e->{
+            leftHbox.setCursor(Cursor.HAND);
+        });
+        leftHbox.setOnMouseClicked(e->{
+            try {
+                App.secondaryStage = Utils.getStage("FullScreenMusicPlayer.fxml",1920,1080,"");
+                App.secondaryStage.setFullScreen(true);
+                App.secondaryStage.show();
+                App.secondaryStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+                    if (event.getCode() == KeyCode.ESCAPE) {
+                        App.secondaryStage.close();
+                    }
+                });
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
     }
     @Override

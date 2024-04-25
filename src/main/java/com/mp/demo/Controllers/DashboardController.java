@@ -1,6 +1,7 @@
 package com.mp.demo.Controllers;
 
 import com.mp.demo.CentralUser;
+import com.mp.demo.Constants;
 import com.mp.demo.Model.MusicModel;
 import com.mp.demo.Utils;
 import javafx.fxml.FXML;
@@ -9,14 +10,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
+    @FXML
+    private AnchorPane ParentContainer;
+
     @FXML
     private AnchorPane bottomPlayer;
     @FXML
@@ -28,10 +38,19 @@ public class DashboardController implements Initializable {
     @FXML
     private HBox musicBox;
     @FXML
+    private AnchorPane mainDashboardView;
+    private AnchorPane storedMaindashboardView;
+
+
     ArrayList<MusicModel> musicsList;
+    @FXML
+    private StackPane profile;
+
     public HorizontalMusicPlayerController hmp;
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            FXMLLoader loader = Utils.loadFXML("HorizontalMusicPlayer.fxml");
+        storedMaindashboardView = mainDashboardView;
+        System.out.println(storedMaindashboardView);
+        FXMLLoader loader = Utils.loadFXML("HorizontalMusicPlayer.fxml");
         try {
             AnchorPane temp = loader.load();
             AnchorPane.setTopAnchor(temp, 0.0);
@@ -56,7 +75,7 @@ public class DashboardController implements Initializable {
 
         musicsList = new MusicModel().getAllMusics();
         System.out.println(musicsList);
-        for(int i=0;i<3;i++){
+        for(int i=0;i<5;i++){
             addMusicView(musicsList.get(i));
         }
     }
@@ -68,14 +87,14 @@ public class DashboardController implements Initializable {
             MusicViewController musicViewController = loader.getController();
             musicViewController.setMusic(music);
             musicView.setOnMouseEntered(e -> {
-                musicView.setStyle("-fx-background-color: #1DB954;-fx-background-radius: 10px; -fx-padding : 10px;");
+                musicView.setStyle("-fx-background-color: #272727;-fx-background-radius: 10px; -fx-padding : 10px;");
                 musicView.setCursor(Cursor.HAND);
             });
             musicView.setOnMouseExited(e -> {
                 musicView.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;");
             });
             musicView.setOnMouseClicked(e->{
-                hmp.setNewMedia(music.getMusicId());
+                hmp.setNewMedia(music);
             });
             musicBox.getChildren().add(musicView);
 
@@ -105,11 +124,51 @@ public class DashboardController implements Initializable {
     public void  makeButtonFromHBOX(HBox hBox){
         hBox.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;");
         hBox.setOnMouseEntered(e -> {
-            hBox.setStyle("-fx-background-color: #1DB954;-fx-background-radius: 10px; -fx-padding : 10px;");
+            hBox.setStyle("-fx-background-color: #005CE6;-fx-background-radius: 10px; -fx-padding : 10px;");
             hBox.setCursor(Cursor.HAND);
         });
         hBox.setOnMouseExited(e -> hBox.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;"));
         hBox.setOnMouseClicked(e -> System.out.println("Button clicked!"));
+    }
+
+    public void setProfile(){
+        char ch = CentralUser.loggedInUser.username.toUpperCase().charAt(0);
+        Text text = new Text(Character.toString(ch));
+        text.setFont(Font.font("Fixedsys Excelsior 3.01", FontWeight.BOLD, 30));
+        //Fixedsys Excelsior 3.01
+        text.setFill(Color.WHITE);
+        profile.getChildren().add(text);
+        profile.setOnMouseEntered(e->{
+            profile.setCursor(Cursor.HAND);
+        });
+
+        profile.setOnMouseClicked(e->{
+            setToParentContainer("UserProfileView.fxml");
+        });
+    }
+
+    public void setToParentContainer(String fxmlFilename){
+        FXMLLoader loader = Utils.loadFXML("UserProfileView.fxml");
+        try {
+            AnchorPane temp = loader.load();
+            AnchorPane.setTopAnchor(temp, 0.0);
+            AnchorPane.setRightAnchor(temp, 0.0);
+            AnchorPane.setBottomAnchor(temp, 0.0);
+            AnchorPane.setLeftAnchor(temp, 0.0);
+            ParentContainer.getChildren().clear();
+            ParentContainer.getChildren().add(temp);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void goBackToDashboardView(){
+        AnchorPane.setTopAnchor(storedMaindashboardView, 0.0);
+        AnchorPane.setRightAnchor(storedMaindashboardView, 0.0);
+        AnchorPane.setBottomAnchor(storedMaindashboardView, 0.0);
+        AnchorPane.setLeftAnchor(storedMaindashboardView, 0.0);
+        ParentContainer.getChildren().clear();
+        ParentContainer.getChildren().add(storedMaindashboardView);
     }
 }
 

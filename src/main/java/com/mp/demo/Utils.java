@@ -1,7 +1,9 @@
 package com.mp.demo;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.io.IOException;
@@ -33,6 +35,15 @@ public class Utils {
         App.primaryStage.setScene(scene);
     }
 
+    public static FXMLLoader getLoaderSetScene(String fxmlFileName) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlFileName));
+        Scene scene = new Scene(fxmlLoader.load(),Constants.Screen1width,Constants.Screen1height);
+        App.primaryStage.setTitle("smotify");
+        App.primaryStage.setScene(scene);
+        return  fxmlLoader;
+    }
+
+
     public static void setStage(String fxmlFileName, int width, int height, String stageTitle) throws IOException {
         Stage stage = getStage(fxmlFileName,width,height,stageTitle);
         if(App.primaryStage!=null){
@@ -40,6 +51,11 @@ public class Utils {
         }
         App.primaryStage = stage;
         App.primaryStage.show();
+    }
+
+    public static void setFullScreen(String fxmlFileName) throws IOException {
+        setScene(fxmlFileName,1920,1080,"");
+        App.primaryStage.setFullScreen(true);
     }
 
     public static String getHashedPassword(String plainPassword){
@@ -83,6 +99,14 @@ public class Utils {
 
     public static Image getImage(String imageFileName){
         String path = App.class.getResource("images/"+imageFileName).toString();
+//        System.out.println(path);
+        Image img = new Image(path);
+//        System.out.println(img.getUrl());
+        return img;
+    }
+
+    public static Image getWall(String imageFileName){
+        String path = App.class.getResource("fullscreenwalls/"+imageFileName).toString();
 //        System.out.println(path);
         Image img = new Image(path);
 //        System.out.println(img.getUrl());

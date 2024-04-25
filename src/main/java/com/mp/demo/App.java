@@ -12,12 +12,14 @@ import java.sql.Connection;
 
 public class App extends Application {
     public static Stage primaryStage;
+    public static Stage secondaryStage;
     @Override
     public void start(Stage stage) throws IOException {
         Utils.checkDBConnection();
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-        stage = Utils.getStage("Dashboard.fxml",Constants.Screen1width,Constants.Screen1height,"Music Player");
+        stage = Utils.getStage("NewUserView.fxml",Constants.Screen2width,Constants.Screen2height,"Music Player");
         primaryStage = stage;
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

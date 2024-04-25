@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXSlider?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="80.0" prefWidth="1440.0" style="-fx-background-color: #242424; -fx-background-radius: 50px;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.HorizontalMusicPlayerController">
+<AnchorPane prefHeight="80.0" prefWidth="1440.0" style="-fx-background-color: #242424;" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.HorizontalMusicPlayerController">
    <children>
       <HBox prefHeight="80.0" prefWidth="1440.0" style="-fx-background-color: #242424; -fx-background-radius: 15px;">
          <children>
-            <HBox prefHeight="80.0" prefWidth="480.0" />
+            <HBox fx:id="leftHbox" alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="480.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="albumPoster" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="278.0">
+                     <children>
+                        <Text fx:id="titleText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="artistText" fill="WHITE" layoutX="10.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="genreText" fill="WHITE" layoutX="10.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                     </children>
+                  </VBox>
+               </children></HBox>
             <HBox layoutX="10.0" layoutY="10.0" prefHeight="80.0" prefWidth="480.0">
                <children>
                   <AnchorPane prefHeight="80.0" prefWidth="481.0">

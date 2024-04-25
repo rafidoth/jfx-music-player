@@ -2,10 +2,12 @@ package com.mp.demo.Controllers;
 
 import atlantafx.base.controls.PasswordTextField;
 import com.mp.demo.App;
+import com.mp.demo.CentralUser;
 import com.mp.demo.Constants;
 import com.mp.demo.Model.UserModel;
 import com.mp.demo.Utils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -38,9 +40,11 @@ public class NewUserController {
         boolean usernameAvailable = newUser.isUsernameAvailable();
         System.out.println(usernameAvailable);
         if(usernameAvailable){
+            CentralUser.loggedInUser = newUser;
             newUser.createAccount();
-            Utils.setStage("MusicPlayerView.fxml",1000,800,"music");
-
+            FXMLLoader loader =  Utils.getLoaderSetScene("Dashboard.fxml");
+            CentralUser.dashboardController = loader.getController();
+            CentralUser.dashboardController.setProfile();
         }else{
             error.setText("Username already taken! Try another one please.");
             error.setTextFill(Color.RED);

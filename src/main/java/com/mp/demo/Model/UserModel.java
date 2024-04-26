@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UserModel {
     Connection conn;
@@ -27,6 +28,33 @@ public class UserModel {
        this.username = username;
        this.password = password;
    }
+   public UserModel(){
+       conn = Utils.getDBConnection();
+   }
+   public  ArrayList<UserModel> searchUser(String searchString) {
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        ArrayList<UserModel> userList = new ArrayList<>();
+        String sql = "SELECT id, username, password FROM users WHERE username LIKE ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + searchString + "%");
+            res = ps.executeQuery();
+            while (res.next()) {
+                String id = res.getString("id");
+                String username = res.getString("username");
+                String password = res.getString("password");
+                UserModel user = new UserModel(id, username, password);
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            Utils.closeResultSet(res);
+            Utils.closeStatement(ps);
+        }
+        return userList;
+    }
 
     public boolean isCorrectAccount() {
         PreparedStatement ps = null;

@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane prefHeight="705.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.FindFriendsViewController">
    <children>
-      <Text layoutX="306.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="find friends here" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#005ce6" height="37.0" layoutY="31.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-width: 15px; -fx-arc-height: 15px;" width="163.0" />
+      <Text fill="WHITE" layoutX="8.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Find Friends">
+         <font>
+            <Font name="Inter Medium" size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="userSearchInput" layoutX="208.0" layoutY="79.0" prefHeight="40.0" prefWidth="550.0" promptText="Search People" style="-fx-border-radius: 20px; -fx-background-radius: 20px;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="Inter Regular" size="13.0" />
+         </font>
+      </TextField>
+      <ImageView fx:id="close" fitHeight="30.0" fitWidth="30.0" layoutX="767.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/icons8-close-100.png" />
+         </image>
+      </ImageView>
+      <VBox fx:id="PeopleViewContainer" alignment="TOP_CENTER" layoutX="153.0" layoutY="133.0" prefHeight="560.0" prefWidth="700.0" spacing="10.0" />
    </children>
 </AnchorPane>

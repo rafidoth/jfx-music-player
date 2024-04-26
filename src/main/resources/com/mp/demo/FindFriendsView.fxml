@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="705.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.FindFriendsViewController">
+   <children>
+      <Text layoutX="306.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="find friends here" />
+   </children>
+</AnchorPane>

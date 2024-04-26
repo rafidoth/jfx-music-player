@@ -23,10 +23,8 @@ public class MusicSearchBarController implements Initializable {
         close.setCursor(Cursor.HAND);
         close.setVisible(false);
         close.setOnMouseClicked(e->{
+            musicSearchInput.setText("");
             CentralUser.dashboardController.showMusicSearchResult("");
         });
-
-
-
     }
 }

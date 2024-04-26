@@ -35,6 +35,8 @@ public class DashboardController implements Initializable {
     @FXML
     private HBox libBtn;
     @FXML
+    private HBox findFriendsBtn;
+    @FXML
     private VBox friendsView;
     @FXML
     private HBox musicBox;
@@ -46,7 +48,9 @@ public class DashboardController implements Initializable {
     private AnchorPane searchBarContainer;
     @FXML
     private VBox searchResult;
-
+    @FXML
+    private AnchorPane box4;
+    private AnchorPane storedBox4;
 
     ArrayList<MusicModel> musicsList;
     @FXML
@@ -57,6 +61,7 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         searchResult.setVisible(false);
         storedMaindashboardView = mainDashboardView;
+        storedBox4 = box4;
         FXMLLoader loader = Utils.loadFXML("HorizontalMusicPlayer.fxml");
         try {
             AnchorPane temp = loader.load();
@@ -87,12 +92,22 @@ public class DashboardController implements Initializable {
 
         // homebtn
         makeButtonFromHBOX(homebtn);
+        homebtn.setOnMouseClicked(e->{
+            setDashboardViewToBox4();
+        });
         // lib btn
         makeButtonFromHBOX(libBtn);
+        // findFriends
+        makeButtonFromHBOX(findFriendsBtn);
+        findFriendsBtn.setOnMouseClicked(e->{
+            setViewToBox4("FindFriendsView.fxml");
+        });
+
+
 
         //Friends View
         for(int i =1;i<50;i+=10){
-//            addFriendView("https://i.pravatar.cc/150?img="+i, i+"fasdf"+i*2);
+            addFriendView("https://i.pravatar.cc/150?img="+i, i+"fasdf"+i*2);
         }
 
         musicsList = new MusicModel().getAllMusics();
@@ -171,7 +186,7 @@ public class DashboardController implements Initializable {
     }
 
     public void setToParentContainer(String fxmlFilename){
-        FXMLLoader loader = Utils.loadFXML("UserProfileView.fxml");
+        FXMLLoader loader = Utils.loadFXML(fxmlFilename);
         try {
             AnchorPane temp = loader.load();
             AnchorPane.setTopAnchor(temp, 0.0);
@@ -194,6 +209,31 @@ public class DashboardController implements Initializable {
         ParentContainer.getChildren().add(storedMaindashboardView);
     }
 
+    public void setViewToBox4(String fxmlFilename){
+        FXMLLoader loader = Utils.loadFXML(fxmlFilename);
+        try {
+            AnchorPane temp = loader.load();
+            AnchorPane.setTopAnchor(temp, 0.0);
+            AnchorPane.setRightAnchor(temp, 0.0);
+            AnchorPane.setBottomAnchor(temp, 0.0);
+            AnchorPane.setLeftAnchor(temp, 0.0);
+            box4.getChildren().clear();
+            box4.getChildren().add(temp);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setDashboardViewToBox4(){
+        AnchorPane.setTopAnchor(storedBox4, 0.0);
+        AnchorPane.setRightAnchor(storedBox4, 0.0);
+        AnchorPane.setBottomAnchor(storedBox4, 0.0);
+        AnchorPane.setLeftAnchor(storedBox4, 0.0);
+        box4.getChildren().clear();
+        box4.getChildren().add(storedBox4);
+    }
+    
+
     public void showMusicSearchResult(String text)  {
         if(text.equals("")){
             searchResult.setVisible(false);
@@ -202,7 +242,7 @@ public class DashboardController implements Initializable {
         }else{
             searchResult.getChildren().clear();
             ArrayList<MusicModel> mlist = new MusicModel().searchMusic(text);
-            System.out.println(mlist);
+//            System.out.println(mlist);
             if(mlist.size()>0){
                 searchResult.setVisible(true);
                 msc.close.setVisible(true);

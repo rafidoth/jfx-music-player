@@ -59,6 +59,9 @@ public class HorizontalMusicPlayerController implements Initializable {
 
     }
     public void setNewMedia(MusicModel music){
+        if(mediaPlayer!= null){
+            mediaPlayer.stop();
+        }
         mediaPlayer = new MediaPlayer(new Media("http://localhost:3000/audio/"+music.getMusicId()));
         mediaPlayer.setOnReady(()->{
             AudioLength = mediaPlayer.getTotalDuration().toSeconds();

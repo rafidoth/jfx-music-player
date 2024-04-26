@@ -12,4 +12,6 @@ module com.mp.demo {
     exports com.mp.demo;
     exports com.mp.demo.Controllers;
     opens com.mp.demo.Controllers to javafx.fxml;
+    exports com.mp.demo.Server;
+    opens com.mp.demo.Server to javafx.fxml;
 }

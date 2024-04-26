@@ -57,9 +57,26 @@
                               </Text>
                            </children>
                         </HBox>
+                        <HBox fx:id="findFriendsBtn" alignment="CENTER_LEFT" layoutX="20.0" layoutY="60.0" prefHeight="11.0" prefWidth="372.0">
+                           <children>
+                              <ImageView fitHeight="41.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/icons8-friends-96.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Find Friends">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="friendsView" layoutX="14.0" layoutY="167.0" prefHeight="636.0" prefWidth="381.0" spacing="10.0" styleClass="box">
+                  <VBox fx:id="friendsView" layoutX="14.0" layoutY="212.0" prefHeight="636.0" prefWidth="381.0" spacing="10.0" styleClass="box">
                      <children>
                         <Label text="Friends" textFill="WHITE">
                            <font>

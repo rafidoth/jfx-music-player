@@ -50,6 +50,8 @@ public class DashboardController implements Initializable {
     private VBox searchResult;
     @FXML
     private AnchorPane box4;
+    @FXML
+    private AnchorPane box4Container;
     private AnchorPane storedBox4;
 
     ArrayList<MusicModel> musicsList;
@@ -217,8 +219,8 @@ public class DashboardController implements Initializable {
             AnchorPane.setRightAnchor(temp, 0.0);
             AnchorPane.setBottomAnchor(temp, 0.0);
             AnchorPane.setLeftAnchor(temp, 0.0);
-            box4.getChildren().clear();
-            box4.getChildren().add(temp);
+            box4Container.getChildren().clear();
+            box4Container.getChildren().add(temp);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -229,8 +231,8 @@ public class DashboardController implements Initializable {
         AnchorPane.setRightAnchor(storedBox4, 0.0);
         AnchorPane.setBottomAnchor(storedBox4, 0.0);
         AnchorPane.setLeftAnchor(storedBox4, 0.0);
-        box4.getChildren().clear();
-        box4.getChildren().add(storedBox4);
+        box4Container.getChildren().clear();
+        box4Container.getChildren().add(storedBox4);
     }
     
 

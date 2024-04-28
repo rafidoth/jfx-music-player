@@ -18,5 +18,7 @@ public class CentralUser {
     public static SimpleIntegerProperty listenChangeFR = new SimpleIntegerProperty(0);
 
 
-
+    public static void logOut(){
+        loggedInUser = null;
+    }
 }

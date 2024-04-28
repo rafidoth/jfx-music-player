@@ -1,0 +1,10 @@
+colors 
+#005ce6 -> Blue
+#00378a -> Dark Blue 
+
+#ef0107 -> Red
+#bf0106 -> Dark Red
+
+#1cac78 -> Green
+#0e563c -> Dark Green
+

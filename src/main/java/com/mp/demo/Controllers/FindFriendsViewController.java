@@ -75,6 +75,13 @@ public class FindFriendsViewController implements Initializable {
                                contr.changeBtn("RED",usersISentRequest.get(j));
                            }
                        }
+                       ArrayList<UserModel> myFriends = new FriendshipModel().getAllFriends();
+                       for(UserModel x : myFriends) System.out.println(x.username);
+                       for(int j=0;j<myFriends.size();j++){
+                           if(myFriends.get(j).id.equals(searchResult.get(i).id)){
+                               contr.changeBtn("REMOVEFRIEND",myFriends.get(j));
+                           }
+                       }
                        PeopleViewContainer.getChildren().add(ap);
                    }
                }

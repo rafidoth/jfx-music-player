@@ -44,7 +44,7 @@ public class PeopleViewController  implements Initializable {
             System.out.println(CentralUser.loggedInUser.id+ " sent friend request to "+ this.people.id);
             FriendshipModel fm = new FriendshipModel(CentralUser.loggedInUser, this.people);
             if(!fm.friendshipExists()){
-                fm.establishFriendship();
+                fm.sendFriendRequest();
                 btnBehind.setWidth(120);
                 friendshipStatusBtn.setText("Cancel Request");
                 btnBehind.setFill(Color.web("#ef0107"));
@@ -96,18 +96,27 @@ public class PeopleViewController  implements Initializable {
             friendshipBtn.setOnMouseEntered(ev->{
                 btnBehind.setFill(Color.web("#0e563c"));
             });
-
             friendshipBtn.setOnMouseExited(ev->{
                 btnBehind.setFill(Color.web("#1cac78"));
             });
+            CentralUser.dashboardController.pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
 
             friendshipBtn.setOnMouseClicked(ev->{
-                new FriendshipModel().deletePendingRequest(CentralUser.loggedInUser, this.people);
+                friendshipBtn.setVisible(false);
+                FriendshipModel fm = new FriendshipModel(user,CentralUser.loggedInUser);
+                fm.acceptFriendshipRequest();
+                CentralUser.dashboardController.pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
+
+                new Thread(()->{
+                    try {
+                        CentralUser.oos.writeObject(this.people.id+"##"+"FR");
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }).start();
             });
 
-            friendshipBtn.setOnMouseClicked(mouseEvent -> {
 
-            });
         }else if (color.equals("RED")){
             friendshipStatusBtn.setText("Cancel Request");
             btnBehind.setFill(Color.web("#ef0107"));
@@ -118,6 +127,7 @@ public class PeopleViewController  implements Initializable {
             friendshipBtn.setOnMouseExited(ev->{
                 btnBehind.setFill(Color.web("#ef0107"));
             });
+            CentralUser.dashboardController.pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
 
             friendshipBtn.setOnMouseClicked(mouseEvent -> {
                 FriendshipModel fm = new FriendshipModel(CentralUser.loggedInUser, user);
@@ -131,6 +141,10 @@ public class PeopleViewController  implements Initializable {
                 friendshipBtn.setOnMouseExited(ev->{
                     btnBehind.setFill(Color.web("#005ce6"));
                 });
+
+                friendshipBtn.setOnMouseClicked(ev->{
+                    System.out.println("Not handled ->PeopleViewController");
+                });
                 new Thread(()->{
                     try {
                         CentralUser.oos.writeObject(this.people.id+"##"+"FR");
@@ -139,6 +153,8 @@ public class PeopleViewController  implements Initializable {
                     }
                 }).start();
             });
+        }else if(color.equals("REMOVEFRIEND")){
+            friendshipBtn.setVisible(false);
         }
     }
     public void setPeopleData(UserModel user){

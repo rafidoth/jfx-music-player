@@ -46,6 +46,6 @@ public class LogInController {
         }
     }
     public void goToNewUserView() throws IOException {
-        Utils.setScene("NewUserView.fxml", Constants.Screen2width, Constants.Screen2height,"Log In");
+        Utils.setScene("NewUserView.fxml");
     }
 }

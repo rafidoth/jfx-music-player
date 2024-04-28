@@ -28,10 +28,10 @@ public class Utils {
         return new FXMLLoader(App.class.getResource(file));
     }
 
-    public static void setScene(String fxmlFileName, int width, int height, String stageTitle) throws IOException {
+    public static void setScene(String fxmlFileName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlFileName));
-        Scene scene = new Scene(fxmlLoader.load(),width,height);
-        App.primaryStage.setTitle(stageTitle);
+        Scene scene = new Scene(fxmlLoader.load(),Constants.Screen1width,Constants.Screen1height);
+        App.primaryStage.setTitle("smotify");
         App.primaryStage.setScene(scene);
     }
 
@@ -53,10 +53,7 @@ public class Utils {
         App.primaryStage.show();
     }
 
-    public static void setFullScreen(String fxmlFileName) throws IOException {
-        setScene(fxmlFileName,1920,1080,"");
-        App.primaryStage.setFullScreen(true);
-    }
+
 
     public static String getHashedPassword(String plainPassword){
         try{

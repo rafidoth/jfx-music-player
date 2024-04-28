@@ -18,7 +18,7 @@ public class App extends Application {
         Utils.checkDBConnection();
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         Client.connectToSocketServer();
-        stage = Utils.getStage("NewUserView.fxml",Constants.Screen2width,Constants.Screen2height,"Music Player");
+        stage = Utils.getStage("LogInView.fxml",Constants.Screen1width,Constants.Screen1height,"smotify");
         primaryStage = stage;
         primaryStage.setResizable(false);
         primaryStage.show();

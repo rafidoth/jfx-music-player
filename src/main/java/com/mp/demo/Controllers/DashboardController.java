@@ -3,6 +3,7 @@ package com.mp.demo.Controllers;
 import com.mp.demo.CentralUser;
 import com.mp.demo.Model.FriendshipModel;
 import com.mp.demo.Model.MusicModel;
+import com.mp.demo.Model.UserModel;
 import com.mp.demo.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,7 +63,7 @@ public class DashboardController implements Initializable {
     @FXML
     private StackPane pendingRequest;
     @FXML
-    private Text pendingRequestText;
+    public Text pendingRequestText;
 
     @FXML
     private Rectangle pendingRequestBackground;
@@ -70,6 +71,7 @@ public class DashboardController implements Initializable {
     public HorizontalMusicPlayerController hmp;
     public MusicSearchBarController msc;
     public String nowOnBox4 = "";
+    public ArrayList<UserModel> myFriends;
     public void initialize(URL url, ResourceBundle resourceBundle) {
         searchResult.setVisible(false);
         storedMaindashboardView = mainDashboardView;
@@ -123,8 +125,11 @@ public class DashboardController implements Initializable {
 
 
         //Friends View
-        for(int i =1;i<50;i+=10){
-//            addFriendView("https://i.pravatar.cc/150?img="+i, i+"fasdf"+i*2);
+        myFriends = new FriendshipModel().getAllFriends();
+        System.out.println("all friends: "+ myFriends);
+        int len = Math.min(7,myFriends.size());
+        for(int i =0;i<len;i++){
+            addFriendView(myFriends.get(i).username);
         }
 
         musicsList = new MusicModel().getAllMusics();
@@ -157,6 +162,7 @@ public class DashboardController implements Initializable {
         CentralUser.listenChangeFR.addListener(((observableValue, oldValue, newValue) -> {
             System.out.println(newValue);
             pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
+
         }));
     }
 
@@ -209,12 +215,11 @@ public class DashboardController implements Initializable {
 
     }
 
-    public void addFriendView(String url, String name){
+    public void addFriendView( String name){
         try {
             FXMLLoader loader = Utils.loadFXML("friendView.fxml");
             HBox friendView = loader.load();
             FriendViewController friendViewController = loader.getController();
-            friendViewController.setImage(url);
             friendViewController.setName(name);
 
             //style

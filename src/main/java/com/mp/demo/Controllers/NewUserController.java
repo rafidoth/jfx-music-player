@@ -30,7 +30,7 @@ public class NewUserController {
     private Label error;
 
     public void goToLogInView() throws IOException {
-        Utils.setScene("LogInView.fxml", Constants.Screen2width, Constants.Screen2height,"Log In");
+        Utils.setScene("LogInView.fxml");
     }
 
     public void createAccount() throws SQLException, IOException {

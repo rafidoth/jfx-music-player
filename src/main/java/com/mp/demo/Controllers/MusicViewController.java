@@ -25,6 +25,7 @@ public class MusicViewController implements Initializable {
     public void setMusic(MusicModel music){
         this.music = music;
         title.setText(music.getTitle());
-        albumPoster.setImage(Utils.getAlbumImage(music.getAlbum()+".png"));
+//        System.out.println(music.getAlbum().replaceAll("-", "").replaceAll("\\s", "").toLowerCase()+".png");
+        albumPoster.setImage(Utils.getAlbumImage(Utils.processAlbumName(music.getAlbum())));
     }
 }

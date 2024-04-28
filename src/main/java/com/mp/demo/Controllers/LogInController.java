@@ -25,11 +25,21 @@ public class LogInController {
         String username = usernameField.getText();
         String password = Utils.getHashedPassword(passwordField.getPassword());
         UserModel user = new UserModel(username,password);
-        if(user.isCorrectAccount()){
-            CentralUser.loggedInUser = user;
+        UserModel userFromDb = user.isCorrectAccount();
+        if(userFromDb!=null){
+            CentralUser.loggedInUser = userFromDb;
             FXMLLoader loader =  Utils.getLoaderSetScene("Dashboard.fxml");
             CentralUser.dashboardController = loader.getController();
             CentralUser.dashboardController.setProfile();
+            System.out.println(userFromDb.id);
+            new Thread(()->{
+                try {
+                    CentralUser.oos.writeObject(CentralUser.loggedInUser.id);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }).start();
+
         }else{
             error.setText("Wrong credentials. Please check again.");
             error.setTextFill(Color.RED);

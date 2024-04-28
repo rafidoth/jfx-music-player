@@ -45,6 +45,13 @@ public class NewUserController {
             FXMLLoader loader =  Utils.getLoaderSetScene("Dashboard.fxml");
             CentralUser.dashboardController = loader.getController();
             CentralUser.dashboardController.setProfile();
+            new Thread(()->{
+                try {
+                    CentralUser.oos.writeObject(CentralUser.loggedInUser.id);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }).start();
         }else{
             error.setText("Username already taken! Try another one please.");
             error.setTextFill(Color.RED);

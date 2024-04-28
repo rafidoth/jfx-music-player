@@ -71,7 +71,7 @@ public class HorizontalMusicPlayerController implements Initializable {
             mediaPlayer.play();
             isPause.set(false);
         });
-        albumPoster.setImage(Utils.getAlbumImage(music.getAlbum()+".png"));
+        albumPoster.setImage(Utils.getAlbumImage(Utils.processAlbumName(music.getAlbum())));
         titleText.setText(music.getTitle());
         artistText.setText(music.getArtist());
         genreText.setText(music.getGenre());
@@ -137,6 +137,7 @@ public class HorizontalMusicPlayerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
             PlaybackSlider.setValue(0.0);
+            PlaybackSlider.setCursor(Cursor.HAND);
             playbackSwitch.setOnMouseEntered(e -> {
                 playbackSwitch.setCursor(Cursor.HAND);
             });

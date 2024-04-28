@@ -31,6 +31,30 @@ public class UserModel {
    public UserModel(){
        conn = Utils.getDBConnection();
    }
+
+    public UserModel getUserById(String userId) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT username, password FROM users WHERE id = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, userId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                // If a matching user is found, create a UserModel object and return it
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                return new UserModel(userId, username, password);
+            }
+            return null; // Return null if no matching user is found
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            // Close resources
+            Utils.closeResultSet(rs);
+            Utils.closeStatement(ps);
+        }
+    }
    public  ArrayList<UserModel> searchUser(String searchString) {
         PreparedStatement ps = null;
         ResultSet res = null;
@@ -56,28 +80,28 @@ public class UserModel {
         return userList;
     }
 
-    public boolean isCorrectAccount() {
-        PreparedStatement ps = null;
-        ResultSet res = null;
-        String sql = "SELECT COUNT(*) FROM users WHERE username = ? AND password = ?";
-        try {
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            res = ps.executeQuery();
-            if (res.next()) {
-                int count = res.getInt(1);
-                return count == 1; // Return true if there's a match
-            }
-            return false;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error executing SQL query", e);
-        } finally {
-            // Close resources
-            Utils.closeResultSet(res);
-            Utils.closeStatement(ps);
-        }
-    }
+//    public boolean isCorrectAccount() {
+//        PreparedStatement ps = null;
+//        ResultSet res = null;
+//        String sql = "SELECT COUNT(*) FROM users WHERE username = ? AND password = ?";
+//        try {
+//            ps = conn.prepareStatement(sql);
+//            ps.setString(1, username);
+//            ps.setString(2, password);
+//            res = ps.executeQuery();
+//            if (res.next()) {
+//                int count = res.getInt(1);
+//                return count == 1; // Return true if there's a match
+//            }
+//            return false;
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error executing SQL query", e);
+//        } finally {
+//            // Close resources
+//            Utils.closeResultSet(res);
+//            Utils.closeStatement(ps);
+//        }
+//    }
 
 
     public boolean isUsernameAvailable() {
@@ -112,6 +136,33 @@ public class UserModel {
             }
         }
     }
+
+    public UserModel isCorrectAccount() {
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        String sql = "SELECT username, password, id FROM users WHERE username = ? AND password = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            res = ps.executeQuery();
+            if (res.next()) {
+                // If a matching user is found, create a UserModel object and return it
+                String  userId = res.getString("id"); // Retrieve userId as an integer
+                String username = res.getString("username");
+                String password = res.getString("password");
+                return new UserModel(userId, username, password);
+            }
+            return null; // Return null if no matching user is found
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            // Close resources
+            Utils.closeResultSet(res);
+            Utils.closeStatement(ps);
+        }
+    }
+
 
 
 

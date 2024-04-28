@@ -17,6 +17,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Utils.checkDBConnection();
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
+        Client.connectToSocketServer();
         stage = Utils.getStage("NewUserView.fxml",Constants.Screen2width,Constants.Screen2height,"Music Player");
         primaryStage = stage;
         primaryStage.setResizable(false);

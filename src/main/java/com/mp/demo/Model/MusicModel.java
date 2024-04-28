@@ -104,6 +104,7 @@ public class MusicModel {
                 music.setAlbum(res.getString("album"));
                 music.setTitle(res.getString("title"));
                 musics.add(music);
+//                System.out.println(res.getString("album").replaceAll("-", "").replaceAll("\\s", "").toLowerCase());
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error executing SQL query", e);

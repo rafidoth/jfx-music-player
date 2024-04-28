@@ -1,10 +1,9 @@
 package com.mp.demo.Controllers;
 
 import com.mp.demo.CentralUser;
-import com.mp.demo.Constants;
+import com.mp.demo.Model.FriendshipModel;
 import com.mp.demo.Model.MusicModel;
 import com.mp.demo.Utils;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,13 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -41,6 +40,8 @@ public class DashboardController implements Initializable {
     @FXML
     private HBox musicBox;
     @FXML
+    private HBox recentlyplayed;
+    @FXML
     private AnchorPane mainDashboardView;
     private AnchorPane storedMaindashboardView;
 
@@ -58,8 +59,17 @@ public class DashboardController implements Initializable {
     @FXML
     private StackPane profile;
 
+    @FXML
+    private StackPane pendingRequest;
+    @FXML
+    private Text pendingRequestText;
+
+    @FXML
+    private Rectangle pendingRequestBackground;
+
     public HorizontalMusicPlayerController hmp;
     public MusicSearchBarController msc;
+    public String nowOnBox4 = "";
     public void initialize(URL url, ResourceBundle resourceBundle) {
         searchResult.setVisible(false);
         storedMaindashboardView = mainDashboardView;
@@ -97,8 +107,13 @@ public class DashboardController implements Initializable {
         homebtn.setOnMouseClicked(e->{
             setDashboardViewToBox4();
         });
+
+
+
         // lib btn
         makeButtonFromHBOX(libBtn);
+
+
         // findFriends
         makeButtonFromHBOX(findFriendsBtn);
         findFriendsBtn.setOnMouseClicked(e->{
@@ -109,16 +124,42 @@ public class DashboardController implements Initializable {
 
         //Friends View
         for(int i =1;i<50;i+=10){
-            addFriendView("https://i.pravatar.cc/150?img="+i, i+"fasdf"+i*2);
+//            addFriendView("https://i.pravatar.cc/150?img="+i, i+"fasdf"+i*2);
         }
 
         musicsList = new MusicModel().getAllMusics();
-        System.out.println(musicsList);
-        for(int i=0;i<5;i++){
+//        System.out.println(musicsList);
+        for(int i=3;i<8;i++){
             addMusicView(musicsList.get(i));
         }
 
+        // adding to recently played
+        ///////////////////////////////
+        for(int i=0;i<5;i++){
+            addMusicViewToRecentlyPlayed(musicsList.get(i));
+        }
+
+
+
+        // Pending Request
+        pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
+        pendingRequest.setCursor(Cursor.HAND);
+        pendingRequest.setOnMouseEntered(e->{
+            pendingRequestBackground.setFill(Color.web("#00378a"));
+        });
+
+        pendingRequest.setOnMouseExited(e->{
+            pendingRequestBackground.setFill(Color.web("#005ce6"));
+        });
+
+
+        // friendship table changed
+        CentralUser.listenChangeFR.addListener(((observableValue, oldValue, newValue) -> {
+            System.out.println(newValue);
+            pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
+        }));
     }
+
 
     public void addMusicView(MusicModel music) {
         try {
@@ -137,6 +178,30 @@ public class DashboardController implements Initializable {
                 hmp.setNewMedia(music);
             });
             musicBox.getChildren().add(musicView);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void addMusicViewToRecentlyPlayed(MusicModel music) {
+        try {
+            FXMLLoader loader = Utils.loadFXML("MusicView.fxml");
+            AnchorPane musicView = loader.load();
+            MusicViewController musicViewController = loader.getController();
+            musicViewController.setMusic(music);
+            musicView.setOnMouseEntered(e -> {
+                musicView.setStyle("-fx-background-color: #272727;-fx-background-radius: 10px; -fx-padding : 10px;");
+                musicView.setCursor(Cursor.HAND);
+            });
+            musicView.setOnMouseExited(e -> {
+                musicView.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;");
+            });
+            musicView.setOnMouseClicked(e->{
+                hmp.setNewMedia(music);
+            });
+            recentlyplayed.getChildren().add(musicView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -224,6 +289,7 @@ public class DashboardController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        nowOnBox4 = fxmlFilename;
     }
 
     public void setDashboardViewToBox4(){
@@ -233,6 +299,7 @@ public class DashboardController implements Initializable {
         AnchorPane.setLeftAnchor(storedBox4, 0.0);
         box4Container.getChildren().clear();
         box4Container.getChildren().add(storedBox4);
+        nowOnBox4 = "";
     }
     
 

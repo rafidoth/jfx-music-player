@@ -99,17 +99,13 @@ public class Utils {
 
     public static Image getImage(String imageFileName){
         String path = App.class.getResource("images/"+imageFileName).toString();
-//        System.out.println(path);
         Image img = new Image(path);
-//        System.out.println(img.getUrl());
         return img;
     }
 
     public static Image getWall(String imageFileName){
         String path = App.class.getResource("fullscreenwalls/"+imageFileName).toString();
-//        System.out.println(path);
         Image img = new Image(path);
-//        System.out.println(img.getUrl());
         return img;
     }
 
@@ -123,6 +119,10 @@ public class Utils {
         }
         Image img = new Image(path);
         return img;
+    }
+
+    public static String processAlbumName(String albumName){
+        return albumName.replaceAll("-", "").replaceAll("\\s", "").toLowerCase()+".png";
     }
 
     public static void closeResultSet(ResultSet res) {

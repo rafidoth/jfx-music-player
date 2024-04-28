@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -97,6 +98,12 @@
                               </font>
                            </Label>
                            <HBox fx:id="musicBox" layoutX="14.0" layoutY="70.0" prefHeight="137.0" prefWidth="967.0" spacing="10.0" />
+                           <Label layoutX="21.0" layoutY="319.0" text="Recently Played" textFill="WHITE">
+                              <font>
+                                 <Font name="Inter Regular" size="36.0" />
+                              </font>
+                           </Label>
+                           <HBox fx:id="recentlyplayed" layoutX="21.0" layoutY="375.0" prefHeight="137.0" prefWidth="967.0" spacing="10.0" />
                         </children>
                      </AnchorPane>
                   </AnchorPane>
@@ -105,6 +112,20 @@
                         <AnchorPane fx:id="searchBarContainer" prefHeight="50.0" prefWidth="595.0" />
                         <HBox alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="400.0">
                            <children>
+                              <AnchorPane prefHeight="50.0" prefWidth="310.0">
+                                 <children>
+                                    <StackPane fx:id="pendingRequest" layoutX="133.0" layoutY="22.0" prefHeight="22.0" prefWidth="87.0">
+                                       <children>
+                                          <Rectangle fx:id="pendingRequestBackground" arcHeight="5.0" arcWidth="5.0" fill="#005ce6" height="29.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-width: 15px; -fx-arc-height: 15px;" width="152.0" />
+                                          <Text fx:id="pendingRequestText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0 pending request">
+                                             <font>
+                                                <Font name="Inter Regular" size="14.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </AnchorPane>
                               <StackPane fx:id="profile" prefHeight="50.0" prefWidth="58.0">
                                  <children>
                                     <Circle fill="#005ce6" radius="25.0" stroke="BLACK" strokeType="INSIDE" />

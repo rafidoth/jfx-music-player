@@ -1,5 +1,6 @@
 package com.mp.demo.Controllers;
 import com.mp.demo.CentralUser;
+import com.mp.demo.Model.FriendshipModel;
 import com.mp.demo.Model.UserModel;
 import com.mp.demo.Utils;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,8 +28,8 @@ public class FindFriendsViewController implements Initializable {
     @FXML
     private TextField userSearchInput;
 
-
-
+    private ArrayList<UserModel> usersISentRequest;
+    private ArrayList<UserModel> usersWhoSentMeRequest;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         close.setCursor(Cursor.HAND);
@@ -41,7 +43,6 @@ public class FindFriendsViewController implements Initializable {
                 close.setVisible(false);
            }else{
                PeopleViewContainer.getChildren().clear();
-
                ArrayList<UserModel> searchResult = new UserModel().searchUser(newValue);
                if(searchResult.size()>0){
                    close.setVisible(true);
@@ -59,11 +60,30 @@ public class FindFriendsViewController implements Initializable {
                        }
                        PeopleViewController contr = loader.getController();
                        contr.setPeopleData(searchResult.get(i));
+
+                       ArrayList<UserModel> usersWhoSentMeRequest = new FriendshipModel().getUsersWhoSentMeRequest();
+
+                       for(int j=0;j<usersWhoSentMeRequest.size();j++){
+                           if(usersWhoSentMeRequest.get(j).id.equals(searchResult.get(i).id)){
+                               contr.changeBtn("GREEN", usersWhoSentMeRequest.get(j));
+                           }
+                       }
+                       ArrayList<UserModel> usersISentRequest = new FriendshipModel().getUsersISentRequest();
+
+                       for(int j=0;j<usersISentRequest.size();j++){
+                           if(usersISentRequest.get(j).id.equals(searchResult.get(i).id)){
+                               contr.changeBtn("RED",usersISentRequest.get(j));
+                           }
+                       }
                        PeopleViewContainer.getChildren().add(ap);
                    }
                }
+
+
            }
 
         });;
     }
+
+
 }

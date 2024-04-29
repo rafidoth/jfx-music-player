@@ -17,7 +17,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Utils.checkDBConnection();
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-        Client.connectToSocketServer();
+//        Client.connectToSocketServer();// issue take this to login and new user controllers
         stage = Utils.getStage("LogInView.fxml",Constants.Screen1width,Constants.Screen1height,"smotify");
         primaryStage = stage;
         primaryStage.setResizable(false);

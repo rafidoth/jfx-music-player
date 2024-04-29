@@ -103,8 +103,8 @@ public class PeopleViewController  implements Initializable {
 
             friendshipBtn.setOnMouseClicked(ev->{
                 friendshipBtn.setVisible(false);
-                FriendshipModel fm = new FriendshipModel(user,CentralUser.loggedInUser);
-                fm.acceptFriendshipRequest();
+                FriendshipModel fm = new FriendshipModel();
+                fm.acceptFriendshipRequest(user);
                 CentralUser.dashboardController.pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
 
                 new Thread(()->{
@@ -147,6 +147,7 @@ public class PeopleViewController  implements Initializable {
                 });
                 new Thread(()->{
                     try {
+                        System.out.println("sending fr to server");
                         CentralUser.oos.writeObject(this.people.id+"##"+"FR");
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);

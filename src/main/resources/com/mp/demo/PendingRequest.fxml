@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="705.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.PendingRequestController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#005ce6" height="37.0" layoutY="31.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-width: 15px; -fx-arc-height: 15px;" width="223.0" />
+        <Text fill="WHITE" layoutX="8.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pending Requests">
+            <font>
+                <Font name="Inter Medium" size="24.0" />
+            </font>
+        </Text>
+        <VBox fx:id="PeopleViewContainer" alignment="TOP_CENTER" layoutX="53.0" layoutY="87.0" prefHeight="560.0" prefWidth="883.0" spacing="10.0" />
+    </children>
+</AnchorPane>

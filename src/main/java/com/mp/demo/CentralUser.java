@@ -1,6 +1,7 @@
 package com.mp.demo;
 
 import com.mp.demo.Controllers.DashboardController;
+import com.mp.demo.Controllers.PendingRequestController;
 import com.mp.demo.Model.UserModel;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -11,6 +12,7 @@ import java.net.Socket;
 public class CentralUser {
     public static UserModel loggedInUser;
     public static DashboardController dashboardController;
+    public static PendingRequestController pendingRequestController;
     public static Socket socket;
     public static ObjectOutputStream oos;
     public static ObjectInputStream ois;

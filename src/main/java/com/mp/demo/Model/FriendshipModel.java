@@ -160,13 +160,13 @@ public class FriendshipModel {
         }
     }
 
-    public void acceptFriendshipRequest() {
+    public void acceptFriendshipRequest(UserModel userToBeAccepted) {
         PreparedStatement ps = null;
         String sql = "UPDATE Friendship SET status = 'established' WHERE user1 = ? AND user2 = ?";
         try {
             ps = conn.prepareStatement(sql);
-            ps.setString(1, this.user1.id);
-            ps.setString(2, this.user2.id);
+            ps.setString(1, userToBeAccepted.id);
+            ps.setString(2, CentralUser.loggedInUser.id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error executing SQL query", e);

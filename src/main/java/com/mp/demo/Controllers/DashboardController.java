@@ -5,6 +5,7 @@ import com.mp.demo.Model.FriendshipModel;
 import com.mp.demo.Model.MusicModel;
 import com.mp.demo.Model.UserModel;
 import com.mp.demo.Utils;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -119,14 +120,14 @@ public class DashboardController implements Initializable {
         // findFriends
         makeButtonFromHBOX(findFriendsBtn);
         findFriendsBtn.setOnMouseClicked(e->{
-            setViewToBox4("FindFriendsView.fxml");
+            FXMLLoader loader2 = setViewToBox4("FindFriendsView.fxml");
         });
 
 
 
         //Friends View
         myFriends = new FriendshipModel().getAllFriends();
-        System.out.println("all friends: "+ myFriends);
+//        System.out.println("all friends: "+ myFriends);
         int len = Math.min(7,myFriends.size());
         for(int i =0;i<len;i++){
             addFriendView(myFriends.get(i).username);
@@ -157,15 +158,50 @@ public class DashboardController implements Initializable {
             pendingRequestBackground.setFill(Color.web("#005ce6"));
         });
 
+        pendingRequest.setOnMouseClicked(e->{
+            FXMLLoader loader2 = setViewToBox4("PendingRequest.fxml");
+            PendingRequestController controller = loader2.getController();
+            CentralUser.pendingRequestController = controller;
+//            System.out.println("Pending request controller initialized: " + (CentralUser.pendingRequestController != null));
+            controller.updatePendingRequests();
+        });
+
 
         // friendship table changed
         CentralUser.listenChangeFR.addListener(((observableValue, oldValue, newValue) -> {
-            System.out.println(newValue);
-            pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
-
+//            System.out.println(newValue);
+            Platform.runLater(()->{
+                pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
+                updateFriendList();
+            });
         }));
+
+
     }
 
+    public void updatePendingRequestCountTopBar(){
+        if(pendingRequestText!=null){
+            pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
+        }
+    }
+
+    public void updatePendingRequestList(){
+        FXMLLoader loader2 = setViewToBox4("PendingRequest.fxml");
+        PendingRequestController controller = loader2.getController();
+        CentralUser.pendingRequestController = controller;
+//        System.out.println("Pending request controller initialized: " + (CentralUser.pendingRequestController != null));
+        controller.updatePendingRequests();
+    }
+
+    public void updateFriendList(){
+        friendsView.getChildren().clear();
+        myFriends = new FriendshipModel().getAllFriends();
+//        System.out.println("all friends: "+ myFriends);
+        int len = Math.min(7,myFriends.size());
+        for(int i =0;i<len;i++){
+            addFriendView(myFriends.get(i).username);
+        }
+    }
 
     public void addMusicView(MusicModel music) {
         try {
@@ -216,19 +252,21 @@ public class DashboardController implements Initializable {
     }
 
     public void addFriendView( String name){
-        try {
-            FXMLLoader loader = Utils.loadFXML("friendView.fxml");
-            HBox friendView = loader.load();
-            FriendViewController friendViewController = loader.getController();
-            friendViewController.setName(name);
+        Platform.runLater(()->{
+            try {
+                FXMLLoader loader = Utils.loadFXML("friendView.fxml");
+                HBox friendView = loader.load();
+                FriendViewController friendViewController = loader.getController();
+                friendViewController.setName(name);
 
-            //style
-            makeButtonFromHBOX(friendView);
+                //style
+                makeButtonFromHBOX(friendView);
 
-            friendsView.getChildren().add(friendView);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+                friendsView.getChildren().add(friendView);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void  makeButtonFromHBOX(HBox hBox){
@@ -281,7 +319,7 @@ public class DashboardController implements Initializable {
         ParentContainer.getChildren().add(storedMaindashboardView);
     }
 
-    public void setViewToBox4(String fxmlFilename){
+    public FXMLLoader setViewToBox4(String fxmlFilename){
         FXMLLoader loader = Utils.loadFXML(fxmlFilename);
         try {
             AnchorPane temp = loader.load();
@@ -295,6 +333,7 @@ public class DashboardController implements Initializable {
             throw new RuntimeException(e);
         }
         nowOnBox4 = fxmlFilename;
+        return loader;
     }
 
     public void setDashboardViewToBox4(){

@@ -17,7 +17,9 @@ public class ClientReader implements Runnable{
                 serverCommand =(String) ois.readObject();
                 System.out.println( serverCommand);
                 if(serverCommand.equals("FR")){
-                    CentralUser.listenChangeFR.setValue((CentralUser.listenChangeFR.get()+1)%5);
+//                    System.out.println("Update ready receive");
+                    CentralUser.listenChangeFR.setValue((int) (Math.random() * Integer.MAX_VALUE));
+//                    System.out.println("Update received done ->" + CentralUser.listenChangeFR.getValue());
 //                    CentralUser.dashboardController.updatePendingRequest();
                 }
             } catch (IOException | ClassNotFoundException e) {

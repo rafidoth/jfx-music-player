@@ -171,7 +171,7 @@ public class UserModel {
        PreparedStatement ps = null;
        String query = "INSERT INTO users (username, password, id) \n" + "VALUES (?,?,?);";
        try{
-           System.out.println("hello world 3");
+//           System.out.println("hello world 3");
            ps = conn.prepareStatement(query);
            ps.setString(1,username);
            ps.setString(2,password);

@@ -2,6 +2,7 @@ package com.mp.demo.Controllers;
 
 import atlantafx.base.controls.PasswordTextField;
 import com.mp.demo.CentralUser;
+import com.mp.demo.Client;
 import com.mp.demo.Constants;
 import com.mp.demo.Model.UserModel;
 import com.mp.demo.Utils;
@@ -28,10 +29,11 @@ public class LogInController {
         UserModel userFromDb = user.isCorrectAccount();
         if(userFromDb!=null){
             CentralUser.loggedInUser = userFromDb;
+            Client.connectToSocketServer();
             FXMLLoader loader =  Utils.getLoaderSetScene("Dashboard.fxml");
             CentralUser.dashboardController = loader.getController();
             CentralUser.dashboardController.setProfile();
-            System.out.println(userFromDb.id);
+            System.out.println(userFromDb.username);
             new Thread(()->{
                 try {
                     CentralUser.oos.writeObject(CentralUser.loggedInUser.id);

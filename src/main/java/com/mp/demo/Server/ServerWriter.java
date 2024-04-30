@@ -4,12 +4,13 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerWriter implements Runnable{
     ObjectOutputStream oos;
-    HashMap<String,SocketConnection> ConnectionList;
+    ConcurrentHashMap<String,SocketConnection> ConnectionList;
 
-    public ServerWriter(ObjectOutputStream oos, HashMap<String,SocketConnection> ConnectionList){
+    public ServerWriter(ObjectOutputStream oos, ConcurrentHashMap<String,SocketConnection> ConnectionList){
         this.oos = oos;
         this.ConnectionList= ConnectionList;
         new Thread(this).start();

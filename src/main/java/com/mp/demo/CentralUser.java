@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class CentralUser {
     public static UserModel loggedInUser;
@@ -21,6 +22,8 @@ public class CentralUser {
 
     public static SimpleIntegerProperty listenChangeFR = new SimpleIntegerProperty(0);
     public static SimpleIntegerProperty listenChangeCHAT = new SimpleIntegerProperty(0);
+    public static SimpleIntegerProperty listenChangeUSER_LIST = new SimpleIntegerProperty(0);
+    public static ArrayList<String> onlineFriends = new ArrayList<>();
 
 
     public static void logOut(){

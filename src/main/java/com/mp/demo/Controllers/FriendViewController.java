@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
@@ -12,20 +13,16 @@ import java.util.ResourceBundle;
 
 public class FriendViewController implements Initializable {
     @FXML
-    private Circle circle;
-    Image img;
-    @FXML
     private Label friendName;
 
-
+    @FXML
+    ImageView onlinestatus;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        circle.setFill(new ImagePattern(img));
+        onlinestatus.setVisible(false);
     }
 
     public void setImage(String url){
-        img = new Image(url);
-        circle.setFill(new ImagePattern(img));
     }
 
     public void setName(String name){

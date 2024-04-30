@@ -1,12 +1,16 @@
 package com.mp.demo.Server;
 
+import com.mp.demo.Model.UserModel;
+
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerReader implements Runnable{
     SocketConnection conn ;
-    HashMap<String,SocketConnection> ConnectionList;
-    public ServerReader(SocketConnection conn, HashMap<String,SocketConnection> Connections){
+    ConcurrentHashMap<String,SocketConnection> ConnectionList;
+    public ServerReader(SocketConnection conn, ConcurrentHashMap<String,SocketConnection> Connections){
         this.ConnectionList = Connections;
         this.conn = conn;
         new Thread(this).start();
@@ -39,7 +43,26 @@ public class ServerReader implements Runnable{
                 }
                 System.out.println("From Client : "+ conn.userid +"->" + received);
             } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                if (Server.Connections.containsKey(conn.userid)) {
+                    Server.removeDisconnectedClient(conn.userid);
+                    new UserModel().updateUserStatus(conn.userid,"offline");
+                    new Thread(()->{
+                        for (Map.Entry<String, SocketConnection> entry : ConnectionList.entrySet()) {
+                            String userId = entry.getKey();
+                            SocketConnection socketConnection = entry.getValue();
+                            try {
+                                socketConnection.oos.writeObject("USER_LIST");
+                            } catch (IOException ex) {
+                                System.err.println(ex.getMessage());
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                    }).start();
+//                    Server.changedList.setValue((int) (Math.random() * Integer.MAX_VALUE));
+//                    System.err.println("Client " + conn.userid + " disconnected.");
+                }
+                System.err.println(e.getMessage());
+                break;
             }
         }
     }

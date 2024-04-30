@@ -103,7 +103,44 @@ public class UserModel {
 //        }
 //    }
 
+    public void updateUserStatus(String userId, String status) {
+        PreparedStatement ps = null;
+        String sql = "UPDATE users SET status = ? WHERE id = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, status);
+            ps.setString(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating user status", e);
+        } finally {
+            // Close resources
+            Utils.closeStatement(ps);
+        }
+    }
 
+    public ArrayList<String> getOnlineUsers() {
+        ArrayList<String> onlineUsers = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT id, username, password FROM users WHERE status = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "online");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                onlineUsers.add(id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            // Close resources
+            Utils.closeResultSet(rs);
+            Utils.closeStatement(ps);
+        }
+        return onlineUsers;
+    }
     public boolean isUsernameAvailable() {
         PreparedStatement ps = null;
         ResultSet res = null;

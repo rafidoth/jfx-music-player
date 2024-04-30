@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="359.0" spacing="10.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.FriendViewController">
    <children>
-      <Label fx:id="friendName" text="friendname">
+      <Label fx:id="friendName" prefHeight="20.0" prefWidth="302.0" text="friendname">
          <font>
             <Font name="Inter Regular" size="16.0" />
          </font>
       </Label>
+      <ImageView fx:id="onlinestatus" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/icons8-dot-90.png" />
+         </image>
+      </ImageView>
    </children>
 </HBox>

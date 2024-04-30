@@ -1,9 +1,11 @@
 package com.mp.demo.Controllers;
 
 import com.mp.demo.CentralUser;
+import com.mp.demo.CurrentUITracks.CurrentFriendlist;
 import com.mp.demo.Model.FriendshipModel;
 import com.mp.demo.Model.MusicModel;
 import com.mp.demo.Model.UserModel;
+import com.mp.demo.Server.Server;
 import com.mp.demo.Utils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -128,7 +130,7 @@ public class DashboardController implements Initializable {
         //Friends View
         myFriends = new FriendshipModel().getAllFriends();
 //        System.out.println("all friends: "+ myFriends);
-        int len = Math.min(7,myFriends.size());
+        int len = Math.min(12,myFriends.size());
         for(int i =0;i<len;i++){
             addFriendView(myFriends.get(i));
         }
@@ -184,6 +186,15 @@ public class DashboardController implements Initializable {
         }));
 
 
+        // users table changed
+        CentralUser.listenChangeUSER_LIST.addListener(((observableValue, oldValue, newValue) -> {
+            System.out.println("online userlist changed");
+            updateFriendList();
+        }));
+
+        // friendlist online status update
+        // CurrentFriendlist.controllers.addListener();
+
     }
 
     public void updatePendingRequestCountTopBar(){
@@ -201,15 +212,46 @@ public class DashboardController implements Initializable {
     }
 
     public void updateFriendList(){
-        friendsView.getChildren().clear();
-        myFriends = new FriendshipModel().getAllFriends();
+        Platform.runLater(()->{
+            friendsView.getChildren().clear();
+            myFriends = new FriendshipModel().getAllFriends();
 //        System.out.println("all friends: "+ myFriends);
-        int len = Math.min(7,myFriends.size());
-        for(int i =0;i<len;i++){
-            addFriendView(myFriends.get(i));
-        }
+            int len = Math.min(7,myFriends.size());
+            for(int i =0;i<len;i++){
+                addFriendView(myFriends.get(i));
+            }
+        });
     }
-
+    public void addFriendView( UserModel friend){
+        Platform.runLater(()->{
+            try {
+                FXMLLoader loader = Utils.loadFXML("friendView.fxml");
+                HBox friendView = loader.load();
+                FriendViewController friendViewController = loader.getController();
+                friendViewController.setName(friend.username);
+//                CurrentFriendlist.controllers.add(friendViewController);
+                //style
+                if(CentralUser.onlineFriends != null && CentralUser.onlineFriends.size()!=0){
+                    System.out.println(CentralUser.onlineFriends);
+                    if(CentralUser.onlineFriends.contains(friend.id)){
+                        System.out.println("hello world");
+                        friendViewController.onlinestatus.setVisible(true);
+                    }
+                }
+                makeButtonFromHBOX(friendView);
+                friendView.setOnMouseClicked(e->{
+                    FXMLLoader loader1 = setViewToBox4("ChatView.fxml");
+                    ChatViewController controller = loader1.getController();
+                    ChatViewTracker.chatViewController = controller;
+                    ChatViewTracker.friend = friend;
+                    controller.updateChatView(friend);
+                });
+                friendsView.getChildren().add(friendView);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
     public void addMusicView(MusicModel music) {
         try {
             FXMLLoader loader = Utils.loadFXML("MusicView.fxml");
@@ -258,31 +300,7 @@ public class DashboardController implements Initializable {
 
     }
 
-    public void addFriendView( UserModel friend){
-        Platform.runLater(()->{
-            try {
-                FXMLLoader loader = Utils.loadFXML("friendView.fxml");
-                HBox friendView = loader.load();
-                FriendViewController friendViewController = loader.getController();
-                friendViewController.setName(friend.username);
 
-                //style
-                makeButtonFromHBOX(friendView);
-                friendView.setOnMouseClicked(e->{
-                    FXMLLoader loader1 = setViewToBox4("ChatView.fxml");
-                    ChatViewController controller = loader1.getController();
-                    ChatViewTracker.chatViewController = controller;
-                    ChatViewTracker.friend = friend;
-                    controller.updateChatView(friend);
-
-                });
-
-                friendsView.getChildren().add(friendView);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
 
     public void  makeButtonFromHBOX(HBox hBox){
         hBox.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;");

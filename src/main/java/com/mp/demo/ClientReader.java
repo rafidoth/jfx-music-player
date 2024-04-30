@@ -21,6 +21,8 @@ public class ClientReader implements Runnable{
                     CentralUser.listenChangeFR.setValue((int) (Math.random() * Integer.MAX_VALUE));
 //                    System.out.println("Update received done ->" + CentralUser.listenChangeFR.getValue());
 //                    CentralUser.dashboardController.updatePendingRequest();
+                }else if (serverCommand.equals("CHAT")){
+                    CentralUser.listenChangeCHAT.setValue((int) (Math.random() * Integer.MAX_VALUE));
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

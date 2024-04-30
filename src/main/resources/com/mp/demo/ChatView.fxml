@@ -1,8 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.ChatViewController">
-
+   <children>
+      <Text fx:id="text" layoutX="34.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="349.13000106811523">
+         <font>
+            <Font name="Inter Medium" size="36.0" />
+         </font>
+      </Text>
+      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" layoutX="34.0" layoutY="102.0" prefHeight="483.0" prefWidth="945.0">
+         <content>
+            <VBox fx:id="vbox" alignment="BOTTOM_CENTER" prefHeight="55.0" prefWidth="932.0" />
+         </content>
+      </ScrollPane>
+      <HBox alignment="CENTER_RIGHT" layoutX="34.0" layoutY="604.0" prefHeight="61.0" prefWidth="945.0" spacing="30.0">
+         <children>
+            <TextArea fx:id="message" prefHeight="61.0" prefWidth="802.0" wrapText="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <font>
+                  <Font name="Inter Regular" size="15.0" />
+               </font>
+            </TextArea>
+            <StackPane fx:id="sendbtn" prefHeight="22.0" prefWidth="87.0">
+               <children>
+                  <Rectangle fx:id="rectangle1" arcHeight="5.0" arcWidth="5.0" fill="#005ce6" height="29.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-width: 15px; -fx-arc-height: 15px;" width="86.0" />
+                  <Text fx:id="text1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="send">
+                     <font>
+                        <Font name="Inter Regular" size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </StackPane>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

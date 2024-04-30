@@ -27,6 +27,15 @@ public class ServerReader implements Runnable{
                             throw new RuntimeException(e);
                         }
                     }).start();
+                }else if (arr[1].equals("CHAT")){
+                    new Thread(()->{
+                        try {
+                            receiver.oos.writeObject("CHAT");
+                        } catch (IOException e) {
+                            System.err.println(e.getMessage());
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
                 }
                 System.out.println("From Client : "+ conn.userid +"->" + received);
             } catch (IOException | ClassNotFoundException e) {

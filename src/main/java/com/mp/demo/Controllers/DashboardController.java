@@ -130,7 +130,7 @@ public class DashboardController implements Initializable {
 //        System.out.println("all friends: "+ myFriends);
         int len = Math.min(7,myFriends.size());
         for(int i =0;i<len;i++){
-            addFriendView(myFriends.get(i).username);
+            addFriendView(myFriends.get(i));
         }
 
         musicsList = new MusicModel().getAllMusics();
@@ -176,6 +176,13 @@ public class DashboardController implements Initializable {
             });
         }));
 
+        // Messages Table Changed
+        CentralUser.listenChangeCHAT.addListener(((observableValue, oldValue, newValue) -> {
+            if(nowOnBox4.equals("ChatView.fxml")){
+                ChatViewTracker.chatViewController.updateChatView(ChatViewTracker.friend);
+            }
+        }));
+
 
     }
 
@@ -199,7 +206,7 @@ public class DashboardController implements Initializable {
 //        System.out.println("all friends: "+ myFriends);
         int len = Math.min(7,myFriends.size());
         for(int i =0;i<len;i++){
-            addFriendView(myFriends.get(i).username);
+            addFriendView(myFriends.get(i));
         }
     }
 
@@ -251,16 +258,24 @@ public class DashboardController implements Initializable {
 
     }
 
-    public void addFriendView( String name){
+    public void addFriendView( UserModel friend){
         Platform.runLater(()->{
             try {
                 FXMLLoader loader = Utils.loadFXML("friendView.fxml");
                 HBox friendView = loader.load();
                 FriendViewController friendViewController = loader.getController();
-                friendViewController.setName(name);
+                friendViewController.setName(friend.username);
 
                 //style
                 makeButtonFromHBOX(friendView);
+                friendView.setOnMouseClicked(e->{
+                    FXMLLoader loader1 = setViewToBox4("ChatView.fxml");
+                    ChatViewController controller = loader1.getController();
+                    ChatViewTracker.chatViewController = controller;
+                    ChatViewTracker.friend = friend;
+                    controller.updateChatView(friend);
+
+                });
 
                 friendsView.getChildren().add(friendView);
             } catch (IOException e) {
@@ -276,7 +291,6 @@ public class DashboardController implements Initializable {
             hBox.setCursor(Cursor.HAND);
         });
         hBox.setOnMouseExited(e -> hBox.setStyle("-fx-background-color: transparent;-fx-background-radius: 10px; -fx-padding : 10px;"));
-        hBox.setOnMouseClicked(e -> System.out.println("Button clicked!"));
     }
 
     public void setProfile(){

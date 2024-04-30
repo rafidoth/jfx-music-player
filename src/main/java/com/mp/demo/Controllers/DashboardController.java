@@ -188,7 +188,6 @@ public class DashboardController implements Initializable {
 
         // users table changed
         CentralUser.listenChangeUSER_LIST.addListener(((observableValue, oldValue, newValue) -> {
-            System.out.println("online userlist changed");
             updateFriendList();
         }));
 

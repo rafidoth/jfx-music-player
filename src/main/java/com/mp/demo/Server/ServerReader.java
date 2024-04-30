@@ -21,8 +21,8 @@ public class ServerReader implements Runnable{
             try {
                 String received = (String)conn.ois.readObject();
                 String[] arr = received.split("##");
-                SocketConnection receiver = ConnectionList.get(arr[0]);
-                System.out.println(arr[0]);
+                SocketConnection receiver = Server.Connections.get(arr[0]);
+                System.out.println("sending to client" + arr[0]);
                 if(arr[1].equals("FR")){
                     new Thread(()->{
                         try {
@@ -58,9 +58,12 @@ public class ServerReader implements Runnable{
                             }
                         }
                     }).start();
-//                    Server.changedList.setValue((int) (Math.random() * Integer.MAX_VALUE));
-//                    System.err.println("Client " + conn.userid + " disconnected.");
                 }
+                System.out.println("after disconnecting ");
+                for (Map.Entry<String, SocketConnection> entry : ConnectionList.entrySet()) {
+                    System.out.println(entry.getKey());
+                }
+
                 System.err.println(e.getMessage());
                 break;
             }

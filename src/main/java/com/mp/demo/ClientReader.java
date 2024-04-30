@@ -17,7 +17,7 @@ public class ClientReader implements Runnable{
             String serverCommand= null;
             try {
                 serverCommand =(String) ois.readObject();
-                System.out.println( serverCommand);
+                System.out.println("server command received : " +  serverCommand);
                 if(serverCommand.equals("FR")){
 //                    System.out.println("Update ready receive");
                     CentralUser.listenChangeFR.setValue((int) (Math.random() * Integer.MAX_VALUE));
@@ -26,7 +26,6 @@ public class ClientReader implements Runnable{
                 }else if (serverCommand.equals("CHAT")){
                     CentralUser.listenChangeCHAT.setValue((int) (Math.random() * Integer.MAX_VALUE));
                 }else if (serverCommand.equals("USER_LIST")){
-                    System.out.println("User list should be updated");
                     CentralUser.onlineFriends = new UserModel().getOnlineUsers();
                     CentralUser.listenChangeUSER_LIST.setValue((int) (Math.random() * Integer.MAX_VALUE));
                 }

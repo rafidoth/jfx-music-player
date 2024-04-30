@@ -40,7 +40,6 @@ public class Server {
 
     public static void removeDisconnectedClient(String userid) {
         Connections.remove(userid);
-        System.out.println("Client " + userid + " disconnected. Now Connected Clients: " + Connections.size());
     }
 
     static class CreateConnection implements Runnable{
@@ -77,7 +76,7 @@ public class Server {
                 }).start();
                 oos.writeObject("Connection Saved");
                 new ServerReader(conn, Connections);
-                new ServerWriter(oos, Connections);
+//                new ServerWriter(oos, Connections);
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }

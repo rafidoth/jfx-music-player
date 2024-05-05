@@ -6,35 +6,42 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.LogInController">
     <children>
-        <Text layoutX="871.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hey," wrappingWidth="174.4020004272461">
+        <Text layoutX="698.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hey," textAlignment="CENTER" wrappingWidth="174.4020004272461">
             <font>
                 <Font name="Inter Black" size="51.0" />
             </font>
         </Text>
-        <Text layoutX="871.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back !" wrappingWidth="338.4020004272461">
+        <Text layoutX="579.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back !" textAlignment="CENTER" wrappingWidth="338.4020004272461">
             <font>
                 <Font size="24.0" />
             </font>
         </Text>
-        <Text layoutX="871.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vibe again with smotify!" wrappingWidth="338.4020004272461">
-            <font>
-                <Font name="Inter Regular" size="24.0" />
-            </font>
-        </Text>
-        <PasswordTextField fx:id="passwordField" layoutX="871.0" layoutY="385.0" prefHeight="26.0" prefWidth="256.0" promptText="Password" />
-        <TextField fx:id="usernameField" layoutX="871.0" layoutY="335.0" prefHeight="26.0" prefWidth="256.0" promptText="Username" />
-        <Hyperlink layoutX="871.0" layoutY="438.0" onAction="#goToNewUserView" text="Don't have any account?" />
-        <Button layoutX="871.0" layoutY="479.0" mnemonicParsing="false" onAction="#checkCredentials" text="Log In">
+        <PasswordTextField fx:id="passwordField" layoutX="619.0" layoutY="434.0" prefHeight="26.0" prefWidth="256.0" promptText="Password" />
+        <TextField fx:id="usernameField" layoutX="620.0" layoutY="387.0" prefHeight="26.0" prefWidth="256.0" promptText="Username" />
+        <Hyperlink layoutX="619.0" layoutY="468.0" onAction="#goToNewUserView" text="Don't have any account?" />
+        <Button layoutX="719.0" layoutY="510.0" mnemonicParsing="false" onAction="#checkCredentials" text="Log In">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <Label fx:id="error" layoutX="64.0" layoutY="398.0" />
+        <Label fx:id="error" layoutX="91.0" layoutY="382.0" />
+      <ImageView fitHeight="110.0" fitWidth="731.0" layoutX="530.0" layoutY="790.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/smotify_login.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="632.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/music.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

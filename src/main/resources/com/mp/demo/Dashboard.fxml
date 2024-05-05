@@ -93,7 +93,7 @@
                   <AnchorPane fx:id="box4Container" layoutX="421.0" layoutY="98.0" prefHeight="705.0" prefWidth="1006.0">
                      <AnchorPane fx:id="box4" prefHeight="705.0" prefWidth="1006.0" styleClass="box">
                         <children>
-                           <Label layoutX="14.0" layoutY="14.0" text="Based on Artitsts" textFill="WHITE">
+                           <Label layoutX="14.0" layoutY="14.0" text="You may love" textFill="WHITE">
                               <font>
                                  <Font name="Inter Regular" size="36.0" />
                               </font>

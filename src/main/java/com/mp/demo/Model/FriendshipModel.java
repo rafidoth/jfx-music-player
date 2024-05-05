@@ -160,6 +160,24 @@ public class FriendshipModel {
         }
     }
 
+    public void removeFriend(UserModel user) {
+        PreparedStatement ps = null;
+        String sql = "DELETE FROM Friendship WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?) AND status = 'established'";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, CentralUser.loggedInUser.id);
+            ps.setString(2, user.id);
+            ps.setString(3, user.id);
+            ps.setString(4, CentralUser.loggedInUser.id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            Utils.closeStatement(ps);
+        }
+    }
+
+
     public void acceptFriendshipRequest(UserModel userToBeAccepted) {
         PreparedStatement ps = null;
         String sql = "UPDATE Friendship SET status = 'established' WHERE user1 = ? AND user2 = ?";

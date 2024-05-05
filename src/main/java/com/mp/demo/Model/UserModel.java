@@ -141,6 +141,7 @@ public class UserModel {
         }
         return onlineUsers;
     }
+
     public boolean isUsernameAvailable() {
         PreparedStatement ps = null;
         ResultSet res = null;

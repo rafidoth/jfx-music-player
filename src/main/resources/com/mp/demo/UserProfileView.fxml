@@ -30,20 +30,13 @@
             <Font name="Fixedsys Excelsior 3.01" size="72.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#005ce6" height="29.0" layoutX="118.0" layoutY="259.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-width: 15px; -fx-arc-height: 15px;" width="200.0" />
-      <Text fill="WHITE" layoutX="123.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Favourite Musics">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#005ce6" height="29.0" layoutX="123.0" layoutY="245.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-width: 15px; -fx-arc-height: 15px;" width="94.0" />
+      <Text fill="WHITE" layoutX="128.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends">
          <font>
             <Font name="Inter Light" size="24.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#005ce6" height="29.0" layoutX="122.0" layoutY="545.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-width: 15px; -fx-arc-height: 15px;" width="94.0" />
-      <Text fill="WHITE" layoutX="127.0" layoutY="568.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends">
-         <font>
-            <Font name="Inter Light" size="24.0" />
-         </font>
-      </Text>
-      <FlowPane fx:id="favouriteMusicContainer" hgap="10.0" layoutX="118.0" layoutY="303.0" orientation="VERTICAL" prefHeight="225.0" prefWidth="926.0" vgap="10.0" />
-      <FlowPane fx:id="friendsContainer" hgap="10.0" layoutX="123.0" layoutY="589.0" orientation="VERTICAL" prefHeight="225.0" prefWidth="926.0" vgap="10.0" />
+      <FlowPane fx:id="friendsContainer" hgap="40.0" layoutX="123.0" layoutY="302.0" orientation="VERTICAL" prefHeight="406.0" prefWidth="1088.0" vgap="40.0" />
       <StackPane fx:id="logoutbtn" layoutX="1230.0" layoutY="56.0" prefHeight="22.0" prefWidth="87.0">
          <children>
             <Rectangle fx:id="btnBehind" arcHeight="5.0" arcWidth="5.0" fill="#ef0107" height="29.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-width: 15px; -fx-arc-height: 15px;" width="90.0" />

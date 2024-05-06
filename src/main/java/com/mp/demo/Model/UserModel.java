@@ -207,13 +207,14 @@ public class UserModel {
 
     public boolean createAccount() throws SQLException {
        PreparedStatement ps = null;
-       String query = "INSERT INTO users (username, password, id) \n" + "VALUES (?,?,?);";
+       String query = "INSERT INTO users (username, password, id,status) \n" + "VALUES (?,?,?,?);";
        try{
 //           System.out.println("hello world 3");
            ps = conn.prepareStatement(query);
            ps.setString(1,username);
            ps.setString(2,password);
            ps.setString(3,id);
+           ps.setString(4,"online");
            ps.execute();
            return true;
        } catch (SQLException e) {

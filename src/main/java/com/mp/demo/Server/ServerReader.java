@@ -11,7 +11,7 @@ public class ServerReader implements Runnable{
     SocketConnection conn ;
     ConcurrentHashMap<String,SocketConnection> ConnectionList;
     public ServerReader(SocketConnection conn, ConcurrentHashMap<String,SocketConnection> Connections){
-        this.ConnectionList = Connections;
+//        this.ConnectionList = Connections;
         this.conn = conn;
         new Thread(this).start();
     }
@@ -23,6 +23,7 @@ public class ServerReader implements Runnable{
                 String[] arr = received.split("##");
                 SocketConnection receiver = Server.Connections.get(arr[0]);
                 System.out.println("sending to client" + arr[0]);
+                System.out.println(arr[1]);
                 if(arr[1].equals("FR")){
                     new Thread(()->{
                         try {
@@ -43,11 +44,12 @@ public class ServerReader implements Runnable{
                 }
                 System.out.println("From Client : "+ conn.userid +"->" + received);
             } catch (IOException | ClassNotFoundException e) {
+                System.err.println(e.getMessage());
                 if (Server.Connections.containsKey(conn.userid)) {
                     Server.removeDisconnectedClient(conn.userid);
                     new UserModel().updateUserStatus(conn.userid,"offline");
                     new Thread(()->{
-                        for (Map.Entry<String, SocketConnection> entry : ConnectionList.entrySet()) {
+                        for (Map.Entry<String, SocketConnection> entry : Server.Connections.entrySet()) {
                             String userId = entry.getKey();
                             SocketConnection socketConnection = entry.getValue();
                             try {
@@ -60,7 +62,7 @@ public class ServerReader implements Runnable{
                     }).start();
                 }
                 System.out.println("after disconnecting ");
-                for (Map.Entry<String, SocketConnection> entry : ConnectionList.entrySet()) {
+                for (Map.Entry<String, SocketConnection> entry : Server.Connections.entrySet()) {
                     System.out.println(entry.getKey());
                 }
 

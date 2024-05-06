@@ -12,36 +12,41 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.NewUserController">
+<AnchorPane prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.NewUserController">
    <children>
-      <Text layoutX="64.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello," wrappingWidth="174.4020004272461">
+      <Text layoutX="681.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello," textAlignment="CENTER" wrappingWidth="174.4020004272461">
          <font>
             <Font name="Inconsolata Bold" size="51.0" />
          </font>
       </Text>
-      <Text layoutX="64.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You're probably new here" wrappingWidth="338.4020004272461">
+      <Text layoutX="599.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You're probably new here" textAlignment="CENTER" wrappingWidth="338.4020004272461">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="64.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Let's create an account." wrappingWidth="338.4020004272461">
+      <Text layoutX="599.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Let's create an account." textAlignment="CENTER" wrappingWidth="338.4020004272461">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <ImageView fitHeight="500.0" fitWidth="338.0" layoutX="465.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../images/new_user_screen.jpg" />
-         </image>
-      </ImageView>
-      <PasswordTextField fx:id="passwordField" layoutX="64.0" layoutY="273.0" promptText="Password" />
-      <TextField fx:id="usernameField" layoutX="64.0" layoutY="224.0" promptText="Username" />
-      <Hyperlink layoutX="62.0" layoutY="321.0" onAction="#goToLogInView" text="Already have an account ?" />
-      <Button fx:id="createAccountBtn" layoutX="64.0" layoutY="360.0" mnemonicParsing="false" onAction="#createAccount" text="Create Account">
+      <PasswordTextField fx:id="passwordField" layoutX="687.0" layoutY="424.0" promptText="Password" />
+      <TextField fx:id="usernameField" layoutX="687.0" layoutY="381.0" promptText="Username" />
+      <Hyperlink layoutX="685.0" layoutY="465.0" onAction="#goToLogInView" text="Already have an account ?" />
+      <Button fx:id="createAccountBtn" layoutX="712.0" layoutY="518.0" mnemonicParsing="false" onAction="#createAccount" text="Create Account">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="error" layoutX="64.0" layoutY="398.0" />
+      <Label fx:id="error" layoutX="712.0" layoutY="544.0" />
+      <ImageView fitHeight="213.0" fitWidth="338.0" layoutX="629.0" layoutY="595.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/music.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="669.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/smotify.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

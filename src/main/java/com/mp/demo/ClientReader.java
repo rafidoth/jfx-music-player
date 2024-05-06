@@ -15,22 +15,28 @@ public class ClientReader implements Runnable{
     public void run() {
         while(true){
             String serverCommand= null;
+            Object serverCommandObj = null;
             try {
-                serverCommand =(String) ois.readObject();
-                System.out.println("server command received : " +  serverCommand);
-                if(serverCommand.equals("FR")){
+                serverCommandObj = ois.readObject();
+                if(serverCommandObj!=null){
+                    serverCommand =(String) serverCommandObj;
+                    System.out.println("server command received : " +  serverCommand);
+                    if(serverCommand.equals("FR")){
 //                    System.out.println("Update ready receive");
-                    CentralUser.listenChangeFR.setValue((int) (Math.random() * Integer.MAX_VALUE));
+                        CentralUser.listenChangeFR.setValue((int) (Math.random() * Integer.MAX_VALUE));
 //                    System.out.println("Update received done ->" + CentralUser.listenChangeFR.getValue());
 //                    CentralUser.dashboardController.updatePendingRequest();
-                }else if (serverCommand.equals("CHAT")){
-                    CentralUser.listenChangeCHAT.setValue((int) (Math.random() * Integer.MAX_VALUE));
-                }else if (serverCommand.equals("USER_LIST")){
-                    CentralUser.onlineFriends = new UserModel().getOnlineUsers();
-                    CentralUser.listenChangeUSER_LIST.setValue((int) (Math.random() * Integer.MAX_VALUE));
+                    }else if (serverCommand.equals("CHAT")){
+                        CentralUser.listenChangeCHAT.setValue((int) (Math.random() * Integer.MAX_VALUE));
+                    }else if (serverCommand.equals("USER_LIST")){
+                        CentralUser.onlineFriends = new UserModel().getOnlineUsers();
+                        CentralUser.listenChangeUSER_LIST.setValue((int) (Math.random() * Integer.MAX_VALUE));
+                    }
                 }
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
+                break;
+//                e.printStackTrace();
             }
         }
     }

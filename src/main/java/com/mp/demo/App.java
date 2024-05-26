@@ -1,6 +1,7 @@
 package com.mp.demo;
 
 import atlantafx.base.theme.PrimerDark;
+import com.mp.demo.Model.NowPlayingModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,6 +23,10 @@ public class App extends Application {
         primaryStage = stage;
         primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    public void stop() throws Exception{
+        NowPlayingModel.deleteUserNowPlaying();
     }
 
 

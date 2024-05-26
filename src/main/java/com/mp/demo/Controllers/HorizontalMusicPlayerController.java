@@ -2,8 +2,10 @@ package com.mp.demo.Controllers;
 
 import com.jfoenix.controls.JFXSlider;
 import com.mp.demo.App;
+import com.mp.demo.CentralUser;
 import com.mp.demo.Constants;
 import com.mp.demo.Model.MusicModel;
+import com.mp.demo.Model.NowPlayingModel;
 import com.mp.demo.Utils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -62,6 +64,7 @@ public class HorizontalMusicPlayerController implements Initializable {
         if(mediaPlayer!= null){
             mediaPlayer.stop();
         }
+
         mediaPlayer = new MediaPlayer(new Media("http://localhost:3000/audio/"+music.getMusicId()));
         mediaPlayer.setOnReady(()->{
             AudioLength = mediaPlayer.getTotalDuration().toSeconds();
@@ -70,6 +73,9 @@ public class HorizontalMusicPlayerController implements Initializable {
             PlaybackSlider.setValue(0.0);
             mediaPlayer.play();
             isPause.set(false);
+            NowPlayingModel a = new NowPlayingModel(CentralUser.loggedInUser.id,Integer.toString(music.getMusicId()));
+            a.updateNowPlaying();
+            CentralUser.nowPlaying = music;
         });
         albumPoster.setImage(Utils.getAlbumImage(Utils.processAlbumName(music.getAlbum())));
         titleText.setText(music.getTitle());
@@ -115,22 +121,9 @@ public class HorizontalMusicPlayerController implements Initializable {
             mediaPlayer.setVolume(VolumeSlider.getValue()*0.01);
         }));
 
-        leftHbox.setOnMouseEntered(e->{
-            leftHbox.setCursor(Cursor.HAND);
-        });
+        leftHbox.setCursor(Cursor.HAND);
         leftHbox.setOnMouseClicked(e->{
-            try {
-                App.secondaryStage = Utils.getStage("FullScreenMusicPlayer.fxml",1920,1080,"");
-                App.secondaryStage.setFullScreen(true);
-                App.secondaryStage.show();
-                App.secondaryStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-                    if (event.getCode() == KeyCode.ESCAPE) {
-                        App.secondaryStage.close();
-                    }
-                });
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            CentralUser.dashboardController.setViewToBox4("MusicDetailedView.fxml");
         });
 
     }

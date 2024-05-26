@@ -73,6 +73,7 @@ public class DashboardController implements Initializable {
 
     public HorizontalMusicPlayerController hmp;
     public MusicSearchBarController msc;
+    public MusicDetailedViewController mdvc;
     public String nowOnBox4 = "";
     public ArrayList<UserModel> myFriends;
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -129,7 +130,6 @@ public class DashboardController implements Initializable {
 
         //Friends View
         myFriends = new FriendshipModel().getAllFriends();
-//        System.out.println("all friends: "+ myFriends);
         int len = Math.min(12,myFriends.size());
         for(int i =0;i<len;i++){
             addFriendView(myFriends.get(i));
@@ -350,8 +350,12 @@ public class DashboardController implements Initializable {
         ParentContainer.getChildren().add(storedMaindashboardView);
     }
 
+    // sets the input fxml file to the right-bottom corner of the dashboard
     public FXMLLoader setViewToBox4(String fxmlFilename){
         FXMLLoader loader = Utils.loadFXML(fxmlFilename);
+        if(fxmlFilename.equals("MusicDetailedView.fxml")){
+            mdvc = loader.getController();
+        }
         try {
             AnchorPane temp = loader.load();
             AnchorPane.setTopAnchor(temp, 0.0);
@@ -374,6 +378,11 @@ public class DashboardController implements Initializable {
         AnchorPane.setLeftAnchor(storedBox4, 0.0);
         box4Container.getChildren().clear();
         box4Container.getChildren().add(storedBox4);
+        if(nowOnBox4.equals("MusicDetailedView.fxml")){
+            if(mdvc!=null){
+                mdvc.shutdown();
+            }
+        }
         nowOnBox4 = "";
     }
     
@@ -415,6 +424,5 @@ public class DashboardController implements Initializable {
     }
 
 }
-
 
 

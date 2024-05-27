@@ -57,14 +57,12 @@ public class HorizontalMusicPlayerController implements Initializable {
     private HBox leftHbox;
 
     public HorizontalMusicPlayerController(){
-
-
     }
+
     public void setNewMedia(MusicModel music){
         if(mediaPlayer!= null){
             mediaPlayer.stop();
         }
-
         mediaPlayer = new MediaPlayer(new Media("http://localhost:3000/audio/"+music.getMusicId()));
         mediaPlayer.setOnReady(()->{
             AudioLength = mediaPlayer.getTotalDuration().toSeconds();
@@ -125,7 +123,6 @@ public class HorizontalMusicPlayerController implements Initializable {
         leftHbox.setOnMouseClicked(e->{
             CentralUser.dashboardController.setViewToBox4("MusicDetailedView.fxml");
         });
-
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

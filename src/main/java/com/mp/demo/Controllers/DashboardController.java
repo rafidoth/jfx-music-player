@@ -353,11 +353,13 @@ public class DashboardController implements Initializable {
     // sets the input fxml file to the right-bottom corner of the dashboard
     public FXMLLoader setViewToBox4(String fxmlFilename){
         FXMLLoader loader = Utils.loadFXML(fxmlFilename);
-        if(fxmlFilename.equals("MusicDetailedView.fxml")){
-            mdvc = loader.getController();
-        }
+
         try {
             AnchorPane temp = loader.load();
+            if(fxmlFilename.equals("MusicDetailedView.fxml")){
+                mdvc = loader.getController();
+                System.out.println(mdvc);
+            }
             AnchorPane.setTopAnchor(temp, 0.0);
             AnchorPane.setRightAnchor(temp, 0.0);
             AnchorPane.setBottomAnchor(temp, 0.0);
@@ -379,6 +381,7 @@ public class DashboardController implements Initializable {
         box4Container.getChildren().clear();
         box4Container.getChildren().add(storedBox4);
         if(nowOnBox4.equals("MusicDetailedView.fxml")){
+            System.out.println(mdvc);
             if(mdvc!=null){
                 mdvc.shutdown();
             }

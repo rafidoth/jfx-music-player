@@ -25,7 +25,7 @@ public class LyricParser {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return null;
         }
         return lyrics;
     }

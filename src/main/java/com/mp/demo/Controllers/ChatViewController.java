@@ -2,6 +2,8 @@ package com.mp.demo.Controllers;
 
 import com.mp.demo.CentralUser;
 import com.mp.demo.Model.MessageModel;
+import com.mp.demo.Model.MusicModel;
+import com.mp.demo.Model.NowPlayingModel;
 import com.mp.demo.Model.UserModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -24,6 +26,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ChatViewController implements Initializable {
 
@@ -51,9 +56,28 @@ public class ChatViewController implements Initializable {
     private VBox vbox;
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private Text nowmusic;
+    private ScheduledExecutorService chatScheduler;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        chatScheduler = Executors.newSingleThreadScheduledExecutor();
+        chatUpdater();
+    }
 
+    public void chatUpdater(){
+        Runnable updateTask= ()->{
+            if(ChatViewTracker.friend!=null){
+                updateChatView(ChatViewTracker.friend);
+            }
+        };
+        chatScheduler.scheduleAtFixedRate(updateTask,0,1, TimeUnit.SECONDS);
+    }
+
+    public void shutdown() {
+        if(chatScheduler!=null && !chatScheduler.isShutdown()){
+            chatScheduler.shutdown();
+        }
     }
 
     public void updateChatView(UserModel friend){
@@ -62,6 +86,11 @@ public class ChatViewController implements Initializable {
             vbox.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
         });
         text.setText(friend.username);
+        MusicModel musicModel = new NowPlayingModel().userListeningNow(friend.id);
+        if(musicModel!=null){
+            nowmusic.setText(musicModel.getTitle());
+            nowmusic.setFill(Color.web("#d79921"));
+        }
         sendbtn.setOnMouseEntered(e->{
             rectangle1.setFill(Color.web("#00378a"));
         });

@@ -20,6 +20,9 @@ public class NowPlayingModel {
         this.conn = Utils.getDBConnection();
     }
 
+    public NowPlayingModel() {
+        this.conn = Utils.getDBConnection();
+    }
     public static int countListeners(MusicModel music) {
         int listenerCount = 0;
         PreparedStatement ps = null;
@@ -73,6 +76,31 @@ public class NowPlayingModel {
         } finally {
             Utils.closeStatement(ps);
         }
+    }
+
+    public static MusicModel userListeningNow(String userId) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        MusicModel music = null;
+        String sql = "SELECT musicId FROM NowPlaying WHERE userId = ?";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, userId);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String musicId = rs.getString("musicId");
+                music = new MusicModel().getMusicById(Integer.parseInt(musicId));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            Utils.closeResultSet(rs);
+            Utils.closeStatement(ps);
+        }
+
+        return music;
     }
 
 }

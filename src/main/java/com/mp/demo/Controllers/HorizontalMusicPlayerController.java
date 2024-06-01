@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXSlider;
 import com.mp.demo.App;
 import com.mp.demo.CentralUser;
 import com.mp.demo.Constants;
+import com.mp.demo.Model.HistoryModel;
 import com.mp.demo.Model.MusicModel;
 import com.mp.demo.Model.NowPlayingModel;
 import com.mp.demo.Utils;
@@ -74,6 +75,7 @@ public class HorizontalMusicPlayerController implements Initializable {
             NowPlayingModel a = new NowPlayingModel(CentralUser.loggedInUser.id,Integer.toString(music.getMusicId()));
             a.updateNowPlaying();
             CentralUser.nowPlaying = music;
+            new HistoryModel().storeHistory(CentralUser.loggedInUser.id, Integer.toString(music.getMusicId()));
         });
         albumPoster.setImage(Utils.getAlbumImage(Utils.processAlbumName(music.getAlbum())));
         titleText.setText(music.getTitle());

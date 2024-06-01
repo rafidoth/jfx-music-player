@@ -14,31 +14,36 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mp.demo.Controllers.LogInController">
     <children>
-        <Text layoutX="717.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hey," textAlignment="CENTER" wrappingWidth="174.4020004272461">
+      <ImageView fitHeight="900.0" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/bg.png" />
+         </image>
+      </ImageView>
+        <Text layoutX="763.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hey," textAlignment="CENTER" wrappingWidth="174.4020004272461">
             <font>
                 <Font name="Inter Black" size="51.0" />
             </font>
         </Text>
-        <Text layoutX="598.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back !" textAlignment="CENTER" wrappingWidth="338.4020004272461">
+        <Text layoutX="644.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back !" textAlignment="CENTER" wrappingWidth="338.4020004272461">
             <font>
                 <Font size="24.0" />
             </font>
         </Text>
-        <PasswordTextField fx:id="passwordField" layoutX="638.0" layoutY="525.0" prefHeight="26.0" prefWidth="256.0" promptText="Password" />
-        <TextField fx:id="usernameField" layoutX="639.0" layoutY="478.0" prefHeight="26.0" prefWidth="256.0" promptText="Username" />
-        <Hyperlink layoutX="639.0" layoutY="577.0" onAction="#goToNewUserView" text="Don't have any account?" />
-        <Button layoutX="739.0" layoutY="626.0" mnemonicParsing="false" onAction="#checkCredentials" text="Log In">
+        <PasswordTextField fx:id="passwordField" layoutX="684.0" layoutY="557.0" prefHeight="26.0" prefWidth="256.0" promptText="Password" />
+        <TextField fx:id="usernameField" layoutX="685.0" layoutY="510.0" prefHeight="26.0" prefWidth="256.0" promptText="Username" />
+        <Hyperlink layoutX="685.0" layoutY="609.0" onAction="#goToNewUserView" text="Don't have any account?" />
+        <Button layoutX="785.0" layoutY="658.0" mnemonicParsing="false" onAction="#checkCredentials" text="Log In">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <Label fx:id="error" layoutX="110.0" layoutY="473.0" />
-      <ImageView fitHeight="62.0" fitWidth="322.0" layoutX="662.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
+        <Label fx:id="error" layoutX="156.0" layoutY="505.0" />
+      <ImageView fitHeight="62.0" fitWidth="322.0" layoutX="708.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/smotify.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="651.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="697.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/music.png" />
          </image>

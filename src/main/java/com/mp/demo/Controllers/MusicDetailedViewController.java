@@ -29,7 +29,7 @@ public class MusicDetailedViewController implements Initializable {
     @FXML
     private Text listenerCounter;
     @FXML
-    private Text lyricsHolder;
+private Text lyricsHolder;
     private ScheduledExecutorService scheduler1;
     private ScheduledExecutorService scheduler2;
 
@@ -46,9 +46,14 @@ public class MusicDetailedViewController implements Initializable {
     private void updateLyrics(){
         ArrayList<LyricLine> lyrics;
         try {
-            lyrics = LyricParser.parseLyricsFile("11231006.txt");
+//            lyrics = LyricParser.parseLyricsFile("11231006.txt");
+            lyrics = LyricParser.parseLyricsFile(CentralUser.nowPlaying.getMusicId()+".txt");
+            if(lyrics== null){
+                lyricsHolder.setText("No Lyric File Found");
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            lyricsHolder.setText("No Lyric File Found");
+            return;
         }
 
         Runnable updateTask = () -> {
@@ -58,7 +63,7 @@ public class MusicDetailedViewController implements Initializable {
                     Platform.runLater(() -> lyricsHolder.setText(lyricLine.getLyricText()));
                 }
             }
-            System.out.println("Lyrics : updateTask(_) running "+ (int) (Math.random() * Integer.MAX_VALUE));
+//            System.out.println("Lyrics : updateTask(_) running "+ (int) (Math.random() * Integer.MAX_VALUE));
         };
         scheduler2.scheduleAtFixedRate(updateTask, 0, 1, TimeUnit.SECONDS);
     }
@@ -74,7 +79,7 @@ public class MusicDetailedViewController implements Initializable {
                 Platform.runLater(() -> listenerCounter.setText("Currently "+ newListenerCount + " people listening to this song"));
             }
 
-            System.out.println("listeningCounter : updateTask(_) running "+ (int) (Math.random() * Integer.MAX_VALUE));
+//            System.out.println("listeningCounter : updateTask(_) running "+ (int) (Math.random() * Integer.MAX_VALUE));
 
         };
         scheduler1.scheduleAtFixedRate(updateTask, 0, 1, TimeUnit.SECONDS);

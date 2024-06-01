@@ -52,5 +52,10 @@
             </StackPane>
          </children>
       </HBox>
+      <Text fx:id="nowmusic" layoutX="35.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="Inter Regular" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

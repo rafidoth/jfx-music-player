@@ -229,4 +229,35 @@ public class FriendshipModel {
             Utils.closeStatement(ps);
         }
     }
+
+
+    public ArrayList<UserModel> getAllOnlineFriends() {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<UserModel> onlineFriendsList = new ArrayList<>();
+        String sql = "SELECT u.id, u.username, u.password " +
+                "FROM Friendship f " +
+                "JOIN users u ON (f.user1 = u.id OR f.user2 = u.id) " +
+                "WHERE (f.user1 = ? OR f.user2 = ?) AND u.status = 'online' AND f.status = 'established' " +
+                "AND u.id <> ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, CentralUser.loggedInUser.id);
+            ps.setString(2, CentralUser.loggedInUser.id);
+            ps.setString(3, CentralUser.loggedInUser.id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                onlineFriendsList.add(new UserModel(id, username, password));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            Utils.closeResultSet(rs);
+            Utils.closeStatement(ps);
+        }
+        return onlineFriendsList;
+    }
 }

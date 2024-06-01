@@ -3,6 +3,7 @@ package com.mp.demo.Controllers;
 import com.mp.demo.CentralUser;
 import com.mp.demo.CurrentUITracks.CurrentFriendlist;
 import com.mp.demo.Model.FriendshipModel;
+import com.mp.demo.Model.HistoryModel;
 import com.mp.demo.Model.MusicModel;
 import com.mp.demo.Model.UserModel;
 import com.mp.demo.Server.Server;
@@ -24,8 +25,10 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class DashboardController implements Initializable {
     @FXML
@@ -135,16 +138,46 @@ public class DashboardController implements Initializable {
             addFriendView(myFriends.get(i));
         }
 
-        musicsList = new MusicModel().getAllMusics();
-//        System.out.println(musicsList);
-        for(int i=3;i<8;i++){
-            addMusicView(musicsList.get(i));
-        }
+
+
+
 
         // adding to recently played
         ///////////////////////////////
-        for(int i=0;i<5;i++){
-            addMusicViewToRecentlyPlayed(musicsList.get(i));
+        ArrayList<MusicModel> recentyPlayedFive = new HistoryModel().getLastFiveMusics(CentralUser.loggedInUser.id);
+        HashSet<Integer> seenIds = new HashSet<>();
+        ArrayList<MusicModel> uniqueList = new ArrayList<>();
+
+        for (MusicModel obj : recentyPlayedFive) {
+            if (!seenIds.contains(obj.getMusicId())) {
+                seenIds.add(obj.getMusicId());
+                uniqueList.add(obj);
+            }
+        }
+
+        for(int i=0;i<uniqueList.size();i++){
+            addMusicViewToRecentlyPlayed(uniqueList.get(i));
+        }
+
+
+
+        // You may love music list
+        musicsList = new MusicModel().getAllMusics();
+        ArrayList<MusicModel> you_may_love = new ArrayList<>();
+        if(uniqueList.size()!=0){
+            for(int i=0;i<musicsList.size();i++){
+                for(int j=0;j<uniqueList.size();j++){
+                    if(!Integer.toString(musicsList.get(i).getMusicId()).equals(uniqueList.get(j).getMusicId())){
+                        you_may_love.add(musicsList.get(i));
+                    }
+                }
+            }
+        }else{
+            you_may_love = musicsList;
+        }
+        Collections.shuffle(you_may_love);
+        for(int i = 0; i<Math.min(5,you_may_love.size());i++){
+            addMusicView(you_may_love.get(i));
         }
 
 
@@ -194,13 +227,34 @@ public class DashboardController implements Initializable {
         // friendlist online status update
         // CurrentFriendlist.controllers.addListener();
 
+       friendListUpdateScheduler = Executors.newSingleThreadScheduledExecutor();
+       scheduledUpdateFriendList();
     }
+
+    private ScheduledExecutorService friendListUpdateScheduler;
+    void scheduledUpdateFriendList(){
+       Runnable updateTask = ()-> {
+            updateFriendList();
+            updatePendingRequestCountTopBar();
+        };
+       friendListUpdateScheduler.scheduleAtFixedRate(updateTask, 0, 1, TimeUnit.SECONDS);
+    }
+
+    public void shutdown() {
+        System.out.println("Time Task got shutdown");
+        if (friendListUpdateScheduler != null && !friendListUpdateScheduler.isShutdown()) {
+            friendListUpdateScheduler.shutdown();
+        }
+    }
+
 
     public void updatePendingRequestCountTopBar(){
         if(pendingRequestText!=null){
             pendingRequestText.setText(Integer.toString(new FriendshipModel().countPendingFriendshipRequests(CentralUser.loggedInUser.id))+" pending request");
         }
     }
+
+
 
     public void updatePendingRequestList(){
         FXMLLoader loader2 = setViewToBox4("PendingRequest.fxml");
@@ -228,15 +282,18 @@ public class DashboardController implements Initializable {
                 HBox friendView = loader.load();
                 FriendViewController friendViewController = loader.getController();
                 friendViewController.setName(friend.username);
-//                CurrentFriendlist.controllers.add(friendViewController);
-                //style
-                if(CentralUser.onlineFriends != null && CentralUser.onlineFriends.size()!=0){
-                    System.out.println(CentralUser.onlineFriends);
-                    if(CentralUser.onlineFriends.contains(friend.id)){
-                        System.out.println("hello world");
+                ArrayList<UserModel> online = new FriendshipModel().getAllOnlineFriends();
+                for(UserModel x: online){
+                    if(x.id.equals(friend.id)){
                         friendViewController.onlinestatus.setVisible(true);
                     }
                 }
+//                if(CentralUser.onlineFriends != null && CentralUser.onlineFriends.size()!=0){
+//                    System.out.println(CentralUser.onlineFriends);
+//                    if(CentralUser.onlineFriends.contains(friend.id)){
+//                        friendViewController.onlinestatus.setVisible(true);
+//                    }
+//                }
                 makeButtonFromHBOX(friendView);
                 friendView.setOnMouseClicked(e->{
                     FXMLLoader loader1 = setViewToBox4("ChatView.fxml");
@@ -353,7 +410,7 @@ public class DashboardController implements Initializable {
     // sets the input fxml file to the right-bottom corner of the dashboard
     public FXMLLoader setViewToBox4(String fxmlFilename){
         FXMLLoader loader = Utils.loadFXML(fxmlFilename);
-
+        CentralUser.dashboardController.shutdown();
         try {
             AnchorPane temp = loader.load();
             if(fxmlFilename.equals("MusicDetailedView.fxml")){

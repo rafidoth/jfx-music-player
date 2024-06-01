@@ -149,4 +149,31 @@ public class MusicModel {
 
         return musics;
     }
+
+    public MusicModel getMusicById(int musicId) {
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        MusicModel music = null;
+        String sql = "SELECT * FROM musics WHERE musicId = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, musicId);
+            res = ps.executeQuery();
+            if (res.next()) {
+                music = new MusicModel();
+                music.setMusicId(res.getInt("musicId"));
+                music.setArtist(res.getString("artist"));
+                music.setGenre(res.getString("genre"));
+                music.setAlbum(res.getString("album"));
+                music.setTitle(res.getString("title"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error executing SQL query", e);
+        } finally {
+            Utils.closeResultSet(res);
+            Utils.closeStatement(ps);
+        }
+
+        return music;
+    }
 }
